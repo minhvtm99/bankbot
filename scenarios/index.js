@@ -21,10 +21,10 @@ class Scenario {
   processMessage(sender, message, f, wit) {
     return new Promise((resolve, reject) => {
       let buttons = '';
-      let text = 'hello';
+      let text = '';
       let data = '';
       
-      f.txt(sender, text);
+      f.img(sender, 'http://nanoict.org/wp-content/uploads/2018/05/just-a-meme-book-hello-there-wattpad.jpg');
     });
   }
 
