@@ -31,7 +31,8 @@ class Scenario {
 //           f.img(sender,'http://nanoict.org/wp-content/uploads/2018/05/just-a-meme-book-hello-there-wattpad.jpg');
 // }
 // })
-    f.img(sender,'http://nanoict.org/wp-content/uploads/2018/05/just-a-meme-book-hello-there-wattpad.jpg');
+    if (message === 'hi'){
+    f.img(sender,'http://nanoict.org/wp-content/uploads/2018/05/just-a-meme-book-hello-there-wattpad.jpg');}
 
     for (var item in ['hello', 'hi', 'alo', 'chao', 'yo', 'e']) {
      if (message.indexOf(item) > -1){
