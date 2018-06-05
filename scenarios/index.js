@@ -25,7 +25,7 @@ class Scenario {
       let data = '';
       
       // test
-      var greet = ['hello', 'hi', 'alo', 'chao', 'yo', 'e'];
+      const greet = ['hello', 'hi', 'alo', 'chao', 'yo', 'e'];
 //       greet.forEach(function(value){
 //         if (message.indexOf(value) > -1){
 //           f.img(sender,'http://nanoict.org/wp-content/uploads/2018/05/just-a-meme-book-hello-there-wattpad.jpg');
