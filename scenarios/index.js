@@ -10,6 +10,8 @@ class Scenario {
       let buttons = '';
       let text = '';
       let data = '';
+      
+      f.txt(sender, 'hello friend');
 
       //
       if (postback && postback.payload) {
@@ -33,6 +35,8 @@ class Scenario {
     let buttons = '';
     let text = '';
     let data = '';
+    
+    f.txt(sender, 'hello friend');
 
     if (message && message.quick_reply) {
       let quickReply = message.quick_reply;
