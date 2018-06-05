@@ -24,14 +24,16 @@ class Scenario {
       let text = '';
       let data = '';
       
+      
       // test
-      const greet = ['hello', 'hi', 'alo', 'chao', 'yo', 'e'];
 //       greet.forEach(function(value){
 //         if (message.indexOf(value) > -1){
 //           f.img(sender,'http://nanoict.org/wp-content/uploads/2018/05/just-a-meme-book-hello-there-wattpad.jpg');
 // }
 // })
-    for (var item in greet) {
+    f.img(sender,'http://nanoict.org/wp-content/uploads/2018/05/just-a-meme-book-hello-there-wattpad.jpg');
+
+    for (var item in ['hello', 'hi', 'alo', 'chao', 'yo', 'e']) {
      if (message.indexOf(item) > -1){
           f.img(sender,'http://nanoict.org/wp-content/uploads/2018/05/just-a-meme-book-hello-there-wattpad.jpg');
 }
