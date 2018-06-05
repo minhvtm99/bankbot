@@ -24,7 +24,7 @@ class Scenario {
       let text = '';
       let data = '';
       
-      f.txt(sender, 'hello Thu bi ngu');
+      f.txt(sender, 'hello');
     });
   }
 
