@@ -10,8 +10,6 @@ class Scenario {
       let buttons = '';
       let text = '';
       let data = '';
-      
-      f.txt(sender, 'hello friend');
 
       //
       if (postback && postback.payload) {
@@ -23,10 +21,10 @@ class Scenario {
   processMessage(sender, message, f, wit) {
     return new Promise((resolve, reject) => {
       let buttons = '';
-      let text = '';
+      let text = 'hello';
       let data = '';
       
-      f.txt(sender, 'hello friend');
+      f.txt(sender, text);
     });
   }
 
@@ -35,8 +33,6 @@ class Scenario {
     let buttons = '';
     let text = '';
     let data = '';
-    
-    f.txt(sender, 'hello friend');
 
     if (message && message.quick_reply) {
       let quickReply = message.quick_reply;
