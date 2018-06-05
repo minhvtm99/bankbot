@@ -28,7 +28,7 @@ class Scenario {
     });
   }
 
-  processQuickreply(sender, message, f, agenda) {
+  processQuickreply(sender, message, f) {
     //console.log('processQuickreply WIT resp :');
     let buttons = '';
     let text = '';

@@ -13,6 +13,16 @@ const PORT = process.env.PORT || 3000;
 const FBeamer = require('./fbeamer');
 const f = new FBeamer(config.FB);
 
+// Scenarios
+const Scenario = require('./scenarios');
+const scen = new Scenario(f);
+
+// Wit.ai
+const Wit = require('node-wit').Wit;
+const wit = new Wit({
+accessToken: config.WIT_ACCESS_TOKEN
+});
+
 server.use(Restify.jsonp());
 server.use(Restify.bodyParser());
 server.use((req, res, next) => f.verifySignature(req, res, next));
@@ -34,12 +44,13 @@ server.post('/', (req, res, next) => {
 		
 		console.log('----> incomming msg : ' + JSON.stringify(msg));
 
+    
 		if (postback && postback.payload) {
 			scen.processPostback(sender, postback, f);
 		} else if (message && message.text && !message.quick_reply) {
 			scen.processMessage(sender, message, f, wit);
 		} else if (message && message.quick_reply) {
-			scen.processQuickreply(sender, message, f, agenda);
+			scen.processQuickreply(sender, message, f);
 		} else if (message && message.attachments) {
 			scen.processAttachment(sender, message, f);
 		} else {
