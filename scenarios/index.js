@@ -24,6 +24,7 @@ class Scenario {
       let text = '';
       let data = '';
       
+      f.txt(sender, 'hello: ' + message);
     });
   }
 
