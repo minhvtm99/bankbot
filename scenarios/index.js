@@ -24,7 +24,11 @@ class Scenario {
       let text = '';
       let data = '';
       
-      f.img(sender, 'http://nanoict.org/wp-content/uploads/2018/05/just-a-meme-book-hello-there-wattpad.jpg');
+      var greet = ['hello', 'hi', 'alo', 'chao', 'yo', 'e'];
+      greet.forEach(function(value){if (message.indexOf(value) > -1){f.img(sender, 'http://nanoict.org/wp-content/uploads/2018/05/just-a-meme-book-hello-there-wattpad.jpg');
+}
+})
+      
     });
   }
 
