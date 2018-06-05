@@ -1,5 +1,4 @@
 'use strict';
-var utils = require('../utils');
 
 class Scenario {
   constructor(f) {
