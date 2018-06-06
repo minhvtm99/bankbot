@@ -14,6 +14,8 @@ class Scenario {
       //
       if (postback && postback.payload) {
         console.log('postback.payload :' + postback.payload);
+        
+        
       }
     });
   }
@@ -52,6 +54,11 @@ class Scenario {
         return;
       }
       
+      if (message.text === '5') {
+        this.showLocation(sender, f);
+        return;
+      }
+      
       /*
       for (var item in ['hello', 'hi', 'alo', 'chao', 'yo', 'e']) {
         if (message.indexOf(item) > -1) {
@@ -72,7 +79,9 @@ class Scenario {
 
     if (message && message.quick_reply) {
       let quickReply = message.quick_reply;
-
+      if(quickReply === 'QnA_YES') {
+        f.txt(sender,"Ban chon Yes",f);
+      }
     }
   }
 
@@ -232,6 +241,24 @@ class Scenario {
 
    f.sendNews(obj)
      .catch(error => console.log('news: ' + error));
+ }
+  showLocation(sender, f) {
+   let buttons = '';
+   let text = '';
+   let data = '';
+   try {
+     buttons = [{
+       content_type: "location"
+     }];
+     text = 'Hãy gửi vị trí bạn muốn tìm các địa điểm giao dịch gần nhất của VietinBank';
+
+     f.quick(sender, {
+       text,
+       buttons
+     });
+   } catch (e) {
+     console.log(e);
+   }
  }
 }
 
