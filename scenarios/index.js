@@ -33,23 +33,26 @@ class Scenario {
       // })
       if (message === '1') {
         f.img(sender, 'http://nanoict.org/wp-content/uploads/2018/05/just-a-meme-book-hello-there-wattpad.jpg');
+        return;
       }
       
       if (message === '2') {
         this.menuYesNo(sender, "Ban chon option nao", f) ;
+        return;
       }
-      
       
       if (message === '3') {
         this.showRegister(sender, f);
+        return;
       }
       
-      
+      /*
       for (var item in ['hello', 'hi', 'alo', 'chao', 'yo', 'e']) {
         if (message.indexOf(item) > -1) {
           f.img(sender, 'http://nanoict.org/wp-content/uploads/2018/05/just-a-meme-book-hello-there-wattpad.jpg');
         }
       }
+      */
       // end test
 
     });
