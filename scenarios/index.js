@@ -47,6 +47,11 @@ class Scenario {
         return;
       }
       
+      if (message.text === '4') {
+        this.news(sender, f);
+        return;
+      }
+      
       /*
       for (var item in ['hello', 'hi', 'alo', 'chao', 'yo', 'e']) {
         if (message.indexOf(item) > -1) {
@@ -142,6 +147,92 @@ class Scenario {
       console.log(e);
     }
   }
+  
+  news(id, f) {
+
+   let obj = {
+     recipient: {
+       id: id
+     },
+     message: {
+       attachment: {
+         type: "template",
+         payload: {
+           template_type: "generic",
+           elements: [{
+               title: "VietinBank SME Club: Sự đón nhận từ cộng đồng doanh nghiệp",
+               image_url: "http://cafefcdn.com/thumb_w/650/2017/vtb-1482312845555-1491215019360.jpg",
+               subtitle: "Vừa ra mắt trong tháng 7/2017, VietinBank SME Club - Câu lạc bộ các thành viên là khách hàng doanh nghiệp vừa và nhỏ (SME) đã nhận được những lời ngợi khen từ khách hàng...",
+               default_action: {
+                 type: "web_url",
+                 url: "http://www.vietinbank.vn/vn/tin-tuc/VietinBank-SME-Club-Su-don-nhan-tu-cong-dong-doanh-nghiep-20170909135227.html"
+                 //messenger_extensions: true,
+                 //webview_height_ratio: "tall",
+                 //fallback_url: "https://ebanking.vietinbank.vn/rcas/portal/web/retail/bflogin"
+               },
+               buttons: [{
+                 type: "web_url",
+                 url: "http://www.vietinbank.vn/vn/tin-tuc/VietinBank-SME-Club-Su-don-nhan-tu-cong-dong-doanh-nghiep-20170909135227.html",
+                 title: "Xem chi tiết"
+               }, {
+                 type: "postback",
+                 title: "Đăng ký nhận tin",
+                 payload: "NEWS_BOT"
+               }]
+             },
+             {
+               title: "VietinBank tuyển dụng gần 300 nhân sự cho chi nhánh",
+               image_url: "https://thebank.vn/uploads/2014/03/Vietinbank-tuyen-dung.jpg",
+               subtitle: "Đáp ứng yêu cầu nhân sự cho chiến lược phát triển, Ngân hàng TMCP Công Thương Việt Nam (VietinBank) tuyển dụng gần 300 chỉ tiêu tại các vị trí nghiệp vụ và hỗ trợ tín dụng cho các chi nhánh trên toàn hệ thống...",
+               default_action: {
+                 type: "web_url",
+                 url: "https://www.vietinbank.vn/vn/tin-tuc/VietinBank-tuyen-dung-gan-300-nhan-su-cho-chi-nhanh-20170807233640.html",
+                 //messenger_extensions: true,
+                 //webview_height_ratio: "tall",
+                 //fallback_url: "https://peterssendreceiveapp.ngrok.io/"
+               },
+               buttons: [{
+                 type: "web_url",
+                 url: "https://www.vietinbank.vn/vn/tin-tuc/VietinBank-tuyen-dung-gan-300-nhan-su-cho-chi-nhanh-20170807233640.html",
+                 title: "Xem chi tiết"
+               }, {
+                 type: "postback",
+                 title: "Đăng ký nhận tin",
+                 payload: "NEWS_BOT"
+               }]
+             },
+             {
+               title: "VietinBank SME Club: Sự đón nhận từ cộng đồng doanh nghiệp",
+               image_url: "http://image.bnews.vn/MediaUpload/Medium/2017/05/04/090646-bo-nhan-dien-thuong-hieu-vietinbank-2017-1.jpg",
+               subtitle: "Vừa ra mắt trong tháng 7/2017, VietinBank SME Club - Câu lạc bộ các thành viên là khách hàng doanh nghiệp vừa và nhỏ (SME) đã nhận được những lời ngợi khen từ khách hàng...",
+               default_action: {
+                 type: "web_url",
+                 url: "http://www.vietinbank.vn/vn/tin-tuc/VietinBank-SME-Club-Su-don-nhan-tu-cong-dong-doanh-nghiep-20170909135227.html",
+                 //messenger_extensions: true,
+                 //webview_height_ratio: "tall",
+                 //fallback_url: "https://peterssendreceiveapp.ngrok.io/"
+               },
+               buttons: [{
+                 type: "web_url",
+                 url: "http://www.vietinbank.vn/vn/tin-tuc/VietinBank-SME-Club-Su-don-nhan-tu-cong-dong-doanh-nghiep-20170909135227.html",
+                 title: "Xem chi tiết"
+               }, {
+                 type: "postback",
+                 title: "Đăng ký nhận tin",
+                 payload: "NEWS_BOT"
+               }]
+             }
+           ]
+         }
+       }
+     }
+   }
+
+   console.log('--> news data: ' + JSON.stringify(obj));
+
+   f.sendNews(obj)
+     .catch(error => console.log('news: ' + error));
+ }
 }
 
 module.exports = Scenario;
