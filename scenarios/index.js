@@ -59,13 +59,13 @@ class Scenario {
         return;
       }
       
-      /*
-      for (var item in ['hello', 'hi', 'alo', 'chao', 'yo', 'e']) {
+      
+      for (var item in ['hello', 'hi', 'alo', 'chao', 'yo', 'e', 'hey']) {
         if (message.indexOf(item) > -1) {
           f.img(sender, 'http://nanoict.org/wp-content/uploads/2018/05/just-a-meme-book-hello-there-wattpad.jpg');
         }
       }
-      */
+      
       // end test
 
     });
@@ -79,10 +79,11 @@ class Scenario {
 
     if (message && message.quick_reply) {
       let quickReply = message.quick_reply;
-      console.log(quickReply);
+      
       if(quickReply.payload === 'QnA_YES') {
         f.txt(sender,"Ban chon Yes");
       }
+      
     }
   }
 
