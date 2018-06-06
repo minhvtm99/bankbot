@@ -34,13 +34,12 @@ class Scenario {
       //           f.img(sender,'http://nanoict.org/wp-content/uploads/2018/05/just-a-meme-book-hello-there-wattpad.jpg');
       // }
       // })
-      if (message.text === '1') {
-        f.img(sender, 'http://nanoict.org/wp-content/uploads/2018/05/just-a-meme-book-hello-there-wattpad.jpg');
-        return;
-      }
+     
+      f.img(sender, 'http://nanoict.org/wp-content/uploads/2018/05/just-a-meme-book-hello-there-wattpad.jpg');
+      f.txt(sender, 'Hãy gửi số 2');
       
       if (message.text === '2') {
-        this.menuYesNo(sender, "Ban chon option nao", f) ;
+        this.menuYesNo(sender, "Bạn có cần mình giúp không?", f) ;
         return;
       }
       
@@ -59,14 +58,14 @@ class Scenario {
         return;
       }
       
-      
+      /*
       for (var item in ['hello', 'hi', 'alo', 'chao', 'yo', 'e', 'hey']) {
         if (message.text === item) {
           f.img(sender, 'http://nanoict.org/wp-content/uploads/2018/05/just-a-meme-book-hello-there-wattpad.jpg');
           return;
         }
       }
-      
+      */
       // end test
 
     });
@@ -82,7 +81,11 @@ class Scenario {
       let quickReply = message.quick_reply;
       
       if(quickReply.payload === 'QnA_YES') {
-        f.txt(sender,"Ban chon Yes");
+        f.txt(sender,"Hãy gửi 3 để abc, 4 để xyz, 5 để tìm ATM gần nhất");
+      }
+      
+      else {
+        f.txt(sender, "Okay, have a good day");
       }
       
     }
@@ -96,6 +99,12 @@ class Scenario {
     let locType = 'ATM';
 
     if (message && message.attachments) {
+      let location = message.attachments;
+      
+      if (location.payload === 'location'){
+        f.txt(sender, "https://www.google.com/maps");
+        f.txt(sender, 'Ban tu google map nhe :D');
+      }
 
     }
   }
@@ -251,7 +260,8 @@ class Scenario {
    let data = '';
    try {
      buttons = [{
-       content_type: "location"
+       content_type: "location",
+       payload: 'location'
      }];
      text = 'Hãy gửi vị trí bạn muốn tìm các địa điểm giao dịch gần nhất của VietinBank';
 
