@@ -80,7 +80,7 @@ class Scenario {
     if (message && message.quick_reply) {
       let quickReply = message.quick_reply;
       if(quickReply === 'QnA_YES') {
-        f.txt(sender,"Ban chon Yes",f);
+        f.txt(sender,"Ban chon Yes");
       }
     }
   }
