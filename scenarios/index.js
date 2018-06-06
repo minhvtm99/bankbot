@@ -37,7 +37,9 @@ class Scenario {
      
       if (message.text === 'hi' || message.text === 'hello') {
          f.img(sender, 'http://nanoict.org/wp-content/uploads/2018/05/just-a-meme-book-hello-there-wattpad.jpg');
-         f.txt(sender, 'Hãy gửi số 2');
+        // f.txt(sender, 'Hãy gửi số 2');
+         this.menuYesNo(sender, "Bạn có cần mình giúp không?", f);
+        
         return;
       }
      
@@ -105,12 +107,8 @@ class Scenario {
     let locType = 'ATM';
 
     if (message && message.attachments) {
-      let location = message.attachments;
-      
-      if (location.payload === 'location'){
-        f.txt(sender, "https://www.google.com/maps");
-        f.txt(sender, 'Ban tu google map nhe :D');
-      }
+      let attach = message.attachments;
+    
 
     }
   }
