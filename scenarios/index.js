@@ -35,8 +35,12 @@ class Scenario {
       // }
       // })
      
-      f.img(sender, 'http://nanoict.org/wp-content/uploads/2018/05/just-a-meme-book-hello-there-wattpad.jpg');
-      f.txt(sender, 'Hãy gửi số 2');
+      if (message.text === 'hi' || message.text === 'hello') {
+         f.img(sender, 'http://nanoict.org/wp-content/uploads/2018/05/just-a-meme-book-hello-there-wattpad.jpg');
+         f.txt(sender, 'Hãy gửi số 2');
+        return;
+      }
+     
       
       if (message.text === '2') {
         this.menuYesNo(sender, "Bạn có cần mình giúp không?", f) ;
@@ -54,6 +58,8 @@ class Scenario {
       }
       
       if (message.text === '5') {
+        f.txt(sender, "https://www.google.com/maps");
+        f.txt(sender, 'Ban tu google map nhe :D');
         this.showLocation(sender, f);
         return;
       }
