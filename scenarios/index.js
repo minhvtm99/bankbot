@@ -104,7 +104,7 @@ class Scenario {
 
     if (message && message.attachments) {
       let attach = alert(message.attachments[0]);
-      
+      console.log(attach);
       if (attach.type === 'location'){
         f.txt(sender, "https://www.google.com/maps");
         f.txt(sender, 'Ban tu google map nhe :D');
@@ -265,7 +265,6 @@ class Scenario {
    try {
      buttons = [{
        content_type: "location",
-       payload: 'location'
      }];
      text = 'Hãy gửi vị trí bạn muốn tìm các địa điểm giao dịch gần nhất của VietinBank';
 
