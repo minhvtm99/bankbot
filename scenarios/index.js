@@ -103,9 +103,9 @@ class Scenario {
     let locType = 'ATM';
 
     if (message && message.attachments) {
-      let location = message.attachments;
+      let attach = message.attachments;
       
-      if (location.payload === 'location'){
+      if (attach.type === 'location'){
         f.txt(sender, "https://www.google.com/maps");
         f.txt(sender, 'Ban tu google map nhe :D');
       }
