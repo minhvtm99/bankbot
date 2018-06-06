@@ -61,7 +61,7 @@ class Scenario {
       
       
       for (var item in ['hello', 'hi', 'alo', 'chao', 'yo', 'e', 'hey']) {
-        if (message.text.indexOf(item) > -1) {
+        if (message.text === item) {
           f.img(sender, 'http://nanoict.org/wp-content/uploads/2018/05/just-a-meme-book-hello-there-wattpad.jpg');
           return;
         }
