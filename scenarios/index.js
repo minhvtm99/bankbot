@@ -35,12 +35,8 @@ class Scenario {
       // }
       // })
      
-     if (message.text === 'hi' || message === 'hey' || message === 'hello') {
-        f.img(sender, 'http://nanoict.org/wp-content/uploads/2018/05/just-a-meme-book-hello-there-wattpad.jpg');
-        f.txt(sender, 'Hãy gửi số 2');
-        return;
-      }
-
+      f.img(sender, 'http://nanoict.org/wp-content/uploads/2018/05/just-a-meme-book-hello-there-wattpad.jpg');
+      f.txt(sender, 'Hãy gửi số 2');
       
       if (message.text === '2') {
         this.menuYesNo(sender, "Bạn có cần mình giúp không?", f) ;
@@ -103,9 +99,9 @@ class Scenario {
     let locType = 'ATM';
 
     if (message && message.attachments) {
-      let attach = alert(message.attachments[0]);
-
-      if (attach.type === 'location'){
+      let location = message.attachments;
+      
+      if (location.payload === 'location'){
         f.txt(sender, "https://www.google.com/maps");
         f.txt(sender, 'Ban tu google map nhe :D');
       }
@@ -265,6 +261,7 @@ class Scenario {
    try {
      buttons = [{
        content_type: "location",
+       payload: 'location'
      }];
      text = 'Hãy gửi vị trí bạn muốn tìm các địa điểm giao dịch gần nhất của VietinBank';
 
