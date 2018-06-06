@@ -23,7 +23,8 @@ class Scenario {
       let buttons = '';
       let text = '';
       let data = '';
-
+      console.log(message.text);
+      console.log(JSON.stringify(message));
 
       // test
       //       greet.forEach(function(value){
@@ -31,17 +32,17 @@ class Scenario {
       //           f.img(sender,'http://nanoict.org/wp-content/uploads/2018/05/just-a-meme-book-hello-there-wattpad.jpg');
       // }
       // })
-      if (message === '1') {
+      if (message.text === '1') {
         f.img(sender, 'http://nanoict.org/wp-content/uploads/2018/05/just-a-meme-book-hello-there-wattpad.jpg');
         return;
       }
       
-      if (message === '2') {
+      if (message.text === '2') {
         this.menuYesNo(sender, "Ban chon option nao", f) ;
         return;
       }
       
-      if (message === '3') {
+      if (message.text === '3') {
         this.showRegister(sender, f);
         return;
       }
