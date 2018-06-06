@@ -104,7 +104,7 @@ class Scenario {
 
     if (message && message.attachments) {
       let attach = alert(message.attachments[0]);
-      console.log(attach);
+
       if (attach.type === 'location'){
         f.txt(sender, "https://www.google.com/maps");
         f.txt(sender, 'Ban tu google map nhe :D');
