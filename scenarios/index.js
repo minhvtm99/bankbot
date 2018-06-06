@@ -103,7 +103,7 @@ class Scenario {
     let locType = 'ATM';
 
     if (message && message.attachments) {
-      let attach = message.attachments;
+      let attach = alert(message.attachments[0]);
       
       if (attach.type === 'location'){
         f.txt(sender, "https://www.google.com/maps");
