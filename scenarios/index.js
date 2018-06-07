@@ -94,9 +94,6 @@ class Scenario {
         f.txt(sender, "Okay, have a good day");
       }
       
-      else {
-        f.menuYesNo(sender, "Hãy để tôi cho bạn một vài gợi ý: ")
-      }
       
     }
   }
