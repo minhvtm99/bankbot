@@ -36,13 +36,13 @@ class Scenario {
       // })
      
       if (message.text === 'hi' || message.text === 'hello') {
-         f.img(sender, 'http://nanoict.org/wp-content/uploads/2018/05/just-a-meme-book-hello-there-wattpad.jpg');
-         f.txt(sender, 'Hãy gửi số 2');
-        return;
-      }
+         f.txt(sender, 'Chào bạn');
+//          f.txt(sender, 'Hãy gửi số 2');
+//         return;
+//       }
      
       
-      if (message.text === '2') {
+//       if (message.text === '2') {
         this.menuYesNo(sender, "Bạn có cần mình giúp không?", f) ;
         return;
       }
