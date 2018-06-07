@@ -63,11 +63,6 @@ class Scenario {
         return;
       }
      
-      if(message.quick_reply.payload === 'QnA_noanswer'){
-        this.menuYesNo(sender, 'Bạn có muốn tìm ATM gần nhất không?' );
-        return;
-      }
-      
       
       /*
       for (var item in ['hello', 'hi', 'alo', 'chao', 'yo', 'e', 'hey']) {
@@ -99,9 +94,9 @@ class Scenario {
         f.txt(sender, "Okay, have a good day");
       }
       
-//       else {
-//         this.(sender, "Hãy để tôi cho bạn một vài gợi ý: ")
-//       }
+      else {
+        this.menuYesNo(sender, "Hãy để tôi cho bạn một vài gợi ý: ")
+      }
       
     }
   }
