@@ -36,14 +36,13 @@ class Scenario {
       // })
      
       if (message.text === 'hi' || message.text === 'hello') {
-         f.txt(sender, 'Chào bạn');
 //          f.txt(sender, 'Hãy gửi số 2');
 //         return;
 //       }
      
       
 //       if (message.text === '2') {
-        this.menuYesNo(sender, "Bạn có cần mình giúp không?", f) ;
+        this.menuYesNo(sender, "Chào bạn, bạn có cần mình giúp không?", f) ;
         return;
       }
       
