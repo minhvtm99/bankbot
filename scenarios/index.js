@@ -37,9 +37,7 @@ class Scenario {
      
       if (message.text === 'hi' || message.text === 'hello') {
          f.img(sender, 'http://nanoict.org/wp-content/uploads/2018/05/just-a-meme-book-hello-there-wattpad.jpg');
-        // f.txt(sender, 'Hãy gửi số 2');
-         this.menuYesNo(sender, "Bạn có cần mình giúp không?", f);
-        
+         f.txt(sender, 'Hãy gửi số 2');
         return;
       }
      
@@ -129,7 +127,11 @@ class Scenario {
           title: "Không",
           image_url: "https://png.icons8.com/color/50/000000/poor-quality.png",
           payload: 'QnA_NO'
-        }
+        },
+          {content_type: 'text',
+          title: 'Maybe',
+          image_url: 'https://icons8.com/icon/46457/question-mark-outline',
+          payload: 'QnA_noanswer'}
       ];
 
       f.quick(sender, {
