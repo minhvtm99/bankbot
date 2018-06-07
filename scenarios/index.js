@@ -65,7 +65,8 @@ class Scenario {
       }
      
       if(message.quick_reply.payload === 'QnA_noanswer'){
-        this.menuYesNo(sender, 'Bạn có muốn tìm ATM gần nhất không?' )
+        this.menuYesNo(sender, 'Bạn có muốn tìm ATM gần nhất không?' );
+        return;
       }
       
       
@@ -99,9 +100,9 @@ class Scenario {
         f.txt(sender, "Okay, have a good day");
       }
       
-      else {
-        f.txt(sender, "Hãy để tôi cho bạn một vài gợi ý: ")
-      }
+//       else {
+//         this.(sender, "Hãy để tôi cho bạn một vài gợi ý: ")
+//       }
       
     }
   }
