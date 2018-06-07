@@ -63,6 +63,11 @@ class Scenario {
         this.showLocation(sender, f);
         return;
       }
+     
+      if(message.quick_reply.payload === 'QnA_noanswer'){
+        this.menuYesNo(sender, 'Bạn có muốn tìm ATM gần nhất không?' )
+      }
+      
       
       /*
       for (var item in ['hello', 'hi', 'alo', 'chao', 'yo', 'e', 'hey']) {
@@ -90,8 +95,12 @@ class Scenario {
         f.txt(sender,"Hãy gửi 3 để abc, 4 để xyz, 5 để tìm ATM gần nhất");
       }
       
-      else {
+      if(quickReply.payload === 'QnA_NO') {
         f.txt(sender, "Okay, have a good day");
+      }
+      
+      else {
+        f.txt(sender, "Hãy để tôi cho bạn một vài gợi ý: ")
       }
       
     }
