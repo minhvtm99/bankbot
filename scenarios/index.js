@@ -95,7 +95,7 @@ class Scenario {
       }
       
       else {
-        this.menuYesNo(sender, "Hãy để tôi cho bạn một vài gợi ý: ")
+        f.menuYesNo(sender, "Hãy để tôi cho bạn một vài gợi ý: ")
       }
       
     }
