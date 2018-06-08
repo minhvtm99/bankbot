@@ -87,7 +87,7 @@ class Scenario {
       let quickReply = message.quick_reply;
       
       if(quickReply.payload === 'QnA_YES') {
-        f.txt(sender,"Hãy gửi 3 để abc, 4 để xyz, 5 để tìm ATM gần nhất");
+        f.txt(sender,"Bạn hãy gửi 3 để chọn sử dụng dịch vụ của VietinBank, 4 để nhận thông tin, 5 để tìm ATM gần nhất");
       }
       
       if(quickReply.payload === 'QnA_NO') {
@@ -107,6 +107,7 @@ class Scenario {
 
     if (message && message.attachments) {
       let attach = message.attachments;
+      console.log("ATTACHMENT: " + attach);
     
 
     }
@@ -129,10 +130,12 @@ class Scenario {
           image_url: "https://png.icons8.com/color/50/000000/poor-quality.png",
           payload: 'QnA_NO'
         },
-          {content_type: 'text',
+        {
+          content_type: 'text',
           title: 'Maybe',
           image_url: 'https://icons8.com/icon/46457/question-mark-outline',
-          payload: 'QnA_noanswer'}
+          payload: 'QnA_noanswer'
+        }
       ];
 
       f.quick(sender, {
@@ -268,7 +271,6 @@ class Scenario {
    try {
      buttons = [{
        content_type: "location",
-       payload: 'location'
      }];
      text = 'Hãy gửi vị trí bạn muốn tìm các địa điểm giao dịch gần nhất của VietinBank';
 
