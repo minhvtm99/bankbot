@@ -107,7 +107,7 @@ class Scenario {
 
     if (message && message.attachments) {
       let attach = message.attachments;
-      console.log("ATTACH" + JSON.stringify(attach));
+      console.log("ATTACH" + JSON.stringify(attach[0]));
     
 
     }
