@@ -57,8 +57,6 @@ class Scenario {
       }
       
       if (message.text === '5') {
-        f.txt(sender, "https://www.google.com/maps");
-        f.txt(sender, 'Ban tu google map nhe :D');
         this.showLocation(sender, f);
         return;
       }
@@ -109,7 +107,9 @@ class Scenario {
       let attach = message.attachments;
       
       if (attach[0].type === 'location'){
-        console.log("yeahhhhhhhhhhhhh")
+        f.txt(sender, "https://www.google.com/maps");
+        f.txt(sender, 'Ban tu google map nhe :D');
+        return;
       }
       console.log("ATTACH" + JSON.stringify(attach[0]));
     
