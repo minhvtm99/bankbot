@@ -107,6 +107,10 @@ class Scenario {
 
     if (message && message.attachments) {
       let attach = message.attachments;
+      
+      if (attach[0].type === 'location'){
+        console.log("yeahhhhhhhhhhhhh")
+      }
       console.log("ATTACH" + JSON.stringify(attach[0]));
     
 
