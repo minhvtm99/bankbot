@@ -107,8 +107,14 @@ class Scenario {
       let attach = message.attachments;
       
       if (attach[0].type === 'location'){
-        f.txt(sender, "https://www.google.com/maps");
-        f.txt(sender, 'Ban tu google map nhe :D');
+        //f.txt(sender, "https://www.google.com/maps");
+        //f.txt(sender, 'Ban tu google map nhe :D');
+        let coord = message.attachments[0].payload.coordinates;
+       let lat = coord.lat;
+       let long = coord.long;
+       
+        
+        this.getAtmLocation(sender, lat, long, f);
         return;
       }
       console.log("ATTACH" + JSON.stringify(attach[0]));
@@ -268,6 +274,7 @@ class Scenario {
    f.sendNews(obj)
      .catch(error => console.log('news: ' + error));
  }
+  
   showLocation(sender, f) {
    let buttons = '';
    let text = '';
@@ -285,6 +292,92 @@ class Scenario {
    } catch (e) {
      console.log(e);
    }
+ }
+  
+  getAtmLocation(sender, lat, long, f) {
+   var key = 'AIzaSyApV3JtRmRTaLNo-sQOpy8t0regdrri7Sk';
+   var location = lat + ',' + long;
+   var radius = 1000;
+   var sensor = false;
+   var types = "atm";
+   var keyword = "VietinBank";
+
+   var https = require('https');
+   var url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" + "key=" + key + "&location=" + location + "&radius=" + radius + "&sensor=" + sensor + "&types=" + types + "&keyword=" + keyword;
+   console.log(url);
+
+   https.get(url, function(response) {
+     var body = '';
+     response.on('data', function(chunk) {
+       body += chunk;
+     });
+
+     response.on('end', function() {
+       var places = JSON.parse(body);
+       var locations = places.results;
+
+       var displayIndex = 5;
+       if (displayIndex > locations.length) {
+         displayIndex = locations.length;
+       }
+
+       var arrayLocationDisplay = [];
+
+       for (var i = 0; i < displayIndex; i++) {
+         var displayLoc = locations[i];
+         //console.log('getAtmLocation: ' + i + ' >>> ' + JSON.stringify(displayLoc));
+         var targetLoc = displayLoc.geometry.location.lat + ',' + displayLoc.geometry.location.lng;
+         var gmapUrl = "https://www.google.com/maps/dir/" + location + "/" + targetLoc;
+         var imgUrl = "https://www.maketecheasier.com/assets/uploads/2017/07/google-maps-alternatives-featured.jpg";
+
+         arrayLocationDisplay.push({
+           title: displayLoc.name,
+           image_url: imgUrl,
+           subtitle: displayLoc.vicinity,
+           default_action: {
+             type: "web_url",
+             url: gmapUrl,
+             //messenger_extensions: true,
+             //webview_height_ratio: "tall",
+             //fallback_url: "https://peterssendreceiveapp.ngrok.io/"
+           },
+           buttons: [{
+             type: "web_url",
+             url: gmapUrl,
+             title: "Chỉ dẫn"
+           }]
+         });
+
+       }
+
+       if (arrayLocationDisplay.length > 0) {
+         var obj = {
+           recipient: {
+             id: sender
+           },
+           message: {
+             attachment: {
+               type: "template",
+               payload: {
+                 template_type: "generic",
+                 elements: arrayLocationDisplay
+               }
+             }
+           }
+         }
+
+         f.sendNews(obj)
+           .catch(error => console.log('getAtmLocation: ' + error));
+       } else {
+         f.txt(sender, 'Không tìm thấy địa điểm nào phù hợp với yêu cầu của anh/chị');
+       }
+
+       return locations;
+     });
+   }).on('error', function(e) {
+     console.log("getAtmLocation Got error: " + e.message);
+     return;
+   });
  }
 }
 
