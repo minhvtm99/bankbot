@@ -110,10 +110,9 @@ class Scenario {
         //f.txt(sender, "https://www.google.com/maps");
         //f.txt(sender, 'Ban tu google map nhe :D');
         let coord = message.attachments[0].payload.coordinates;
-       let lat = coord.lat;
-       let long = coord.long;
+        let lat = coord.lat;
+        let long = coord.long;
        
-        
         this.getAtmLocation(sender, lat, long, f);
         return;
       }
