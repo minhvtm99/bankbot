@@ -1,5 +1,13 @@
 'use strict';
 
+const firstEntity = (entities, name) => {
+ return entities &&
+   entities[name] &&
+   Array.isArray(entities[name]) &&
+   entities[name] &&
+   entities[name][0];
+}
+
 class Scenario {
   constructor(f) {
     console.log('Scenario starting...');
@@ -34,7 +42,35 @@ class Scenario {
       //           f.img(sender,'http://nanoict.org/wp-content/uploads/2018/05/just-a-meme-book-hello-there-wattpad.jpg');
       // }
       // })
-     
+      //let messageTxt = message.text;
+      wit.message(message.text)
+         .then(({
+           entities
+         }) => {
+           console.log('WIT resp:' + JSON.stringify(entities));
+           let intent = firstEntity(entities, 'intent');
+           //let confidence = firstEntity(entities, 'intent');
+           
+           switch (intent.value) {
+             case 'greetings':
+               f.txt(sender, 'Cảm ơn anh chị, chúc anh chị một ngày tốt lành :) ');
+               break;
+             case 'atm_location':
+               f.txt(sender, 'Cảm ơn anh chị, chúc anh chị một ngày tốt lành :) ');
+               break;
+             case 'thank':
+               f.txt(sender, 'Cảm ơn anh/chị đã sử dụng dịch vụ của VietinBank ^_^ ');
+               break;
+             default:
+               break;
+           }
+         })
+         .catch(error => {
+           console.log(error);
+           f.txt(sender, "Hệ thống phản hồi chậm, xin anh/chị chờ trong giây lát.");
+         });
+      return;
+      /*
       if (message.text === 'hi' || message.text === 'hello') {
 //          f.txt(sender, 'Hãy gửi số 2');
 //         return;
@@ -71,7 +107,7 @@ class Scenario {
       }
       */
       // end test
-
+      
     });
   }
 
@@ -378,6 +414,8 @@ class Scenario {
      return;
    });
  }
+  
+  
 }
 
 module.exports = Scenario;
