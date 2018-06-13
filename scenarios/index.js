@@ -58,8 +58,10 @@ class Scenario {
              case 'atm_location':
                this.showLocation(sender, f);
                break;
-             case 'thank':
-               f.txt(sender, 'Cảm ơn anh/chị đã sử dụng dịch vụ của VietinBank ^_^ ');
+             case 'atm_place':
+                let loctype = firstEntity(entities, 'atm_place')
+                console.log(loctype)
+
                break;
              default:
                break;
