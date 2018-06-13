@@ -56,7 +56,7 @@ class Scenario {
                f.txt(sender, 'Cảm ơn anh chị, chúc anh chị một ngày tốt lành :) ');
                break;
              case 'atm_location':
-               f.txt(sender, 'Cảm ơn anh chị, chúc anh chị một ngày tốt lành :) ');
+               this.showLocation(sender, f);
                break;
              case 'thank':
                f.txt(sender, 'Cảm ơn anh/chị đã sử dụng dịch vụ của VietinBank ^_^ ');
