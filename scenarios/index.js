@@ -1,12 +1,6 @@
 'use strict';
 
-//Include Python
-var PythonShell = require('python-shell');
-
-PythonShell.run('../python/chatbot.py', function (err) {
-  if (err) throw err;
-  console.log('finished');
-});
+var spawn = require("child_process").spawn;
 
 //Get entities
 const firstEntity = (entities, name) => {
