@@ -1,5 +1,23 @@
 'use strict';
 
+//Include Python
+var PythonShell = require('python-shell');
+ 
+var options = {
+  mode: 'text',
+  pythonPath: 'path/to/python',
+  pythonOptions: ['-u'],
+  scriptPath: 'path/to/my/scripts',
+  args: ['value1', 'value2', 'value3']
+};
+ 
+PythonShell.run('chatbot.py', options, function (err, results) {
+  if (err) throw err;
+  // results is an array consisting of messages collected during execution
+  console.log('results: %j', results);
+});
+
+//Get entities
 const firstEntity = (entities, name) => {
  return entities &&
    entities[name] &&
@@ -8,6 +26,7 @@ const firstEntity = (entities, name) => {
    entities[name][0];
 }
 
+//Scen class
 class Scenario {
   constructor(f) {
     console.log('Scenario starting...');
@@ -28,6 +47,10 @@ class Scenario {
     });
   }
 
+  //Include Python
+  
+  
+  
   processMessage(sender, message, f, wit) {
     return new Promise((resolve, reject) => {
       let buttons = '';
@@ -36,13 +59,6 @@ class Scenario {
       console.log(message.text);
       console.log(JSON.stringify(message));
 
-      // test
-      //       greet.forEach(function(value){
-      //         if (message.indexOf(value) > -1){
-      //           f.img(sender,'http://nanoict.org/wp-content/uploads/2018/05/just-a-meme-book-hello-there-wattpad.jpg');
-      // }
-      // })
-      //let messageTxt = message.text;
       wit.message(message.text)
          .then(({
            entities
