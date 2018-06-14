@@ -3,7 +3,7 @@
 //Include Python
 var PythonShell = require('python-shell');
 
-PythonShell.run('my_script.py', function (err) {
+PythonShell.run('chatbot.py', function (err) {
   if (err) throw err;
   console.log('finished');
 });
