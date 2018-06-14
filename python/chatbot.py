@@ -510,8 +510,8 @@ def experiment(incoming_msg, order):
 #Test
 msg = sys.argv[1]
 msg_tagged = experiment(msg, 2)
-console.log(msg_tagged)
-print msg_tagged
+
+print(msg_tagged)
 sys.stdout.flush()
 
   

@@ -45,7 +45,7 @@ class Scenario {
       var pythonProcess = spawn('python',[".../python/chatbot.py", income_msg]);
       pythonProcess.stdout.on('data', function (data){
       // Do something with the data returned from python script
-        console.log(data);
+        console.log(data.toString());
         });
 
 
