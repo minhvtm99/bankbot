@@ -40,19 +40,20 @@ class Scenario {
       let data = '';
       console.log(message.text);
       console.log(JSON.stringify(message));
-      
-      let income_msg = message.txt;
-      var pythonProcess = spawn('python',[".../python/chatbot.py", income_msg]);
-      pythonProcess.stdout.on('data', function (data){
-      // Do something with the data returned from python script
-        console.log(data.toString());
-        });
-
-
+   
       wit.message(message.text)
          .then(({
            entities
          }) => {
+        
+        
+            let income_msg = message.txt;
+            var pythonProcess = spawn('python',[".../python/chatbot.py", income_msg]);
+            pythonProcess.stdout.on('data', function (data){
+      // Do something with the data returned from python script
+                 console.log(data.toString());
+              });
+        
            console.log('WIT resp:' + JSON.stringify(entities));
            let intent = firstEntity(entities, 'intent');
            //let confidence = firstEntity(entities, 'intent');
@@ -76,47 +77,11 @@ class Scenario {
            f.txt(sender, "Hệ thống phản hồi chậm, xin anh/chị chờ trong giây lát.");
          });
       return;
-      /*
-      if (message.text === 'hi' || message.text === 'hello') {
-//          f.txt(sender, 'Hãy gửi số 2');
-//         return;
-//       }
-     
-      
-//       if (message.text === '2') {
-        this.menuYesNo(sender, "Chào bạn, bạn có cần mình giúp không?", f) ;
-        return;
-      }
-      
-      if (message.text === '3') {
-        this.showRegister(sender, f);
-        return;
-      }
-      
-      if (message.text === '4') {
-        this.news(sender, f);
-        return;
-      }
-      
-      if (message.text === '5') {
-        this.showLocation(sender, f);
-        return;
-      }
-     
-      
-      /*
-      for (var item in ['hello', 'hi', 'alo', 'chao', 'yo', 'e', 'hey']) {
-        if (message.text === item) {
-          f.img(sender, 'http://nanoict.org/wp-content/uploads/2018/05/just-a-meme-book-hello-there-wattpad.jpg');
-          return;
-        }
-      }
-      */
-      // end test
       
     });
   }
 
+  
   processQuickreply(sender, message, f) {
     //console.log('processQuickreply WIT resp :');
     let buttons = '';
