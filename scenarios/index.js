@@ -1,21 +1,12 @@
 'use strict';
 
 //Include Python
-// var PythonShell = require('python-shell');
- 
-// var options = {
-//   mode: 'text',
-//   pythonPath: 'path/to/python',
-//   pythonOptions: ['-u'],
-//   scriptPath: 'path/to/my/scripts',
-//   args: ['value1', 'value2', 'value3']
-// };
- 
-// PythonShell.run('chatbot.py', options, function (err, results) {
-//   if (err) throw err;
-//   // results is an array consisting of messages collected during execution
-//   console.log('results: %j', results);
-// });
+var PythonShell = require('python-shell');
+
+PythonShell.run('my_script.py', function (err) {
+  if (err) throw err;
+  console.log('finished');
+});
 
 //Get entities
 const firstEntity = (entities, name) => {
@@ -45,10 +36,7 @@ class Scenario {
         
       }
     });
-  }
-
-  //Include Python
-  
+  }  
   
   
   processMessage(sender, message, f, wit) {
