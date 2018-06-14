@@ -10,6 +10,8 @@ import types
 import time
 import copy
 
+import sys
+
 class HMM:
 	"""
 	Simple class to represent a Hidden Markov Model.
@@ -355,11 +357,6 @@ def build_hmm(training_data, unique_tags, unique_words, order, use_smoothing):
 		hidden_model = HMM(order, initial_dist, emission_prob, trigram_transition)
 	return hidden_model
 
-training_data = read_pos_file("chatbot.txt")
-print training_data
-hmm2 = build_hmm(test_data_tagged[0], test_data_tagged[2], test_data_tagged[1], 2, True)
-hmm3 = build_hmm(test_data_tagged[0], test_data_tagged[2], test_data_tagged[1], 3, True)
-
 
 def bigram_viterbi(hmm, sentence):
 	"""
@@ -489,3 +486,32 @@ def trigram_viterbi(hmm, sentence):
 		Z[i] = bp[Z[i+1]][Z[i+2]][i+2]
 	
 	return zip(X, Z)
+
+def experiment(incoming_msg, order):
+  "Test on a message"
+  #Train markov model
+  training_data = read_pos_file("chatbot.txt")
+  words_tagged = training_data[0]
+  words = training_data[1]
+  tags = training_data[2]
+
+  hmm = build_hmm(words_tagged, tags, words, order, True)
+  
+  msg_split = incoming_msg.split()
+  update_hmm(hmm, msg_split)
+  
+  if order == 2:
+    result = bigram_viterbi(hmm, msg_split)
+  else:
+    result = trigram_viterbi(hmm, msg_split)
+    
+  return result
+  
+#Test
+msg = sys.argv[1]
+msg_tagged = experiment(msg, 2)
+
+print msg_tagged
+sys.stdout.flush()
+
+  

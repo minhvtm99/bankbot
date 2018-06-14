@@ -40,6 +40,14 @@ class Scenario {
       let data = '';
       console.log(message.text);
       console.log(JSON.stringify(message));
+      
+      let income_msg = message.txt;
+      var pythonProcess = spawn('python',[".../python/chatbot.py", income_msg]);
+      pythonProcess.stdout.on('data', function (data){
+      // Do something with the data returned from python script
+        console.log(data);
+        });
+
 
       wit.message(message.text)
          .then(({
@@ -53,14 +61,12 @@ class Scenario {
              case 'greetings':
                f.txt(sender, 'Cảm ơn anh chị, chúc anh chị một ngày tốt lành :) ');
                break;
-             case 'atm_location':
+             case 'atm_location' || 'atm_place':
                this.showLocation(sender, f);
                break;
-             case 'atm_place':
-                let loctype = firstEntity(entities, 'atm_place')
-                console.log(loctype)
+//              case 'bye':
 
-               break;
+//                break;
              default:
                break;
            }
