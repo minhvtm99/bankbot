@@ -57,7 +57,17 @@ class Scenario {
           if (error) throw new Error(error);
 
       console.log(body);
-});
+      
+      let msg_tagged = body.categorized_msg;
+      let street_name = '';
+      var i;
+      for (i = 0; i < msg_tagged.length; i++) { 
+        if (msg_tagged[i][1] === 'Name'){
+            street_name += msg_tagged[i][0] = ' ';
+        }
+       }
+        console.log(street_name)
+      });
 
    
       wit.message(message.text)
