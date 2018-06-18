@@ -50,7 +50,7 @@ class Scenario {
       { 'postman-token': '94080799-6b58-9785-2c2d-5e50ed758bcd',
         'cache-control': 'no-cache',
         'content-type': 'application/json' },
-      body: { message: msg_content },
+      body: { message: "Bot tim cho minh ATM gan Xa Dan di" },
       json: true };
       
       request(options, function (error, response, body) {
