@@ -49,9 +49,9 @@ class Scenario {
       { 'postman-token': '94080799-6b58-9785-2c2d-5e50ed758bcd',
         'cache-control': 'no-cache',
         'content-type': 'application/json' },
-      body: { message: message.txt },
+      body: { message: "Bot tim cho toi atm" },
       json: true };
-
+      
       request(options, function (error, response, body) {
           if (error) throw new Error(error);
 
