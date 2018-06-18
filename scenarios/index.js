@@ -66,7 +66,8 @@ class Scenario {
             street_name += msg_tagged[i][0] = ' ';
         }
        }
-        console.log(street_name)
+        console.log(msg_tagged);
+        console.log(street_name);
       });
 
    
