@@ -43,7 +43,7 @@ class Scenario {
       
       
       var request = require("request");
-      let msg_content = message.txt
+      var msg_content = message.txt
       var options = { method: 'POST',
       url: 'https://bankbotapi.herokuapp.com/message_categorize',
       headers: 
