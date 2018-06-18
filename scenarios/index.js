@@ -40,34 +40,42 @@ class Scenario {
       let data = '';
       console.log(message.text);
       console.log(JSON.stringify(message));
+      
+      var request = require("request");
+
+      var options = { method: 'POST',
+      url: 'https://bankbotapi.herokuapp.com/message_categorize',
+      headers: 
+      { 'postman-token': '94080799-6b58-9785-2c2d-5e50ed758bcd',
+        'cache-control': 'no-cache',
+        'content-type': 'application/json' },
+      body: { message: message.txt },
+      json: true };
+
+      request(options, function (error, response, body) {
+          if (error) throw new Error(error);
+
+      console.log(body);
+});
+
    
       wit.message(message.text)
          .then(({
            entities
          }) => {
-        
-        
-            let income_msg = message.txt;
-            var pythonProcess = spawn('python',[".../python/chatbot.py", income_msg]);
-            pythonProcess.stdout.on('data', function (data){
-      // Do something with the data returned from python script
-                 console.log(data.toString());
-              });
-        
+                
            console.log('WIT resp:' + JSON.stringify(entities));
            let intent = firstEntity(entities, 'intent');
-           //let confidence = firstEntity(entities, 'intent');
            
            switch (intent.value) {
              case 'greetings':
                f.txt(sender, 'Cảm ơn anh chị, chúc anh chị một ngày tốt lành :) ');
                break;
+               
              case 'atm_location' || 'atm_place':
                this.showLocation(sender, f);
                break;
-//              case 'bye':
-
-//                break;
+               
              default:
                break;
            }
