@@ -63,7 +63,7 @@ class Scenario {
       var i;
       for (i = 0; i < msg_tagged.length; i++) { 
         if (msg_tagged[i][1] === 'Name'){
-            street_name += msg_tagged[i][0] = ' ';
+            street_name += msg_tagged[i][0] + ' ';
         }
        }
         console.log(msg_tagged);
