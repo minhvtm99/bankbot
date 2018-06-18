@@ -41,15 +41,16 @@ class Scenario {
       console.log(message.text);
       console.log(JSON.stringify(message));
       
+      
       var request = require("request");
-
+      let msg_content = message.txt
       var options = { method: 'POST',
       url: 'https://bankbotapi.herokuapp.com/message_categorize',
       headers: 
       { 'postman-token': '94080799-6b58-9785-2c2d-5e50ed758bcd',
         'cache-control': 'no-cache',
         'content-type': 'application/json' },
-      body: { message: "Bot tim cho toi atm" },
+      body: { message: msg_content },
       json: true };
       
       request(options, function (error, response, body) {
