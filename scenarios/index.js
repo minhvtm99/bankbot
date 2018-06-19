@@ -351,6 +351,7 @@ class Scenario {
 
      response.on('end', function() {
        var places = JSON.parse(body);
+       console.log(places)
        var locations = places.results;
 
        var displayIndex = 5;
