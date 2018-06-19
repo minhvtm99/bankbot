@@ -67,6 +67,7 @@ class Scenario {
         console.log("ATM location: " + street_name);
         
         if (street_name !== ''){
+          console.log("sssssssssssssssssssssssss")
           this.getAtmLocation(sender, street_name, f)
           return;
         }
