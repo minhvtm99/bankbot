@@ -64,9 +64,10 @@ class Scenario {
             street_name += msg_tagged[i][0] + ' ';
         }
        }
-        console.log("ATM location: " + street_name);
+        console.log("Desired ATM location: " + street_name);
         
         if (street_name !== ''){
+          f.txt(sender, "Ban cho chut nhe!");
           f.getAtmLocation(sender, street_name);
           return;
         }
