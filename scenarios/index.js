@@ -1,7 +1,5 @@
 'use strict';
 
-var spawn = require("child_process").spawn;
-
 //Get entities
 const firstEntity = (entities, name) => {
  return entities &&
@@ -67,6 +65,11 @@ class Scenario {
         }
        }
         console.log("ATM location: " + street_name);
+        
+        if (street_name !== ''){
+          this.getAtmLocation(sender, street_name, f)
+          return;
+        }
       });
 
    
@@ -326,16 +329,17 @@ class Scenario {
   
   
   
-  getAtmLocation(sender, lat, long, f) {
+  getAtmLocation(sender, location, f) {
    var key = 'AIzaSyApV3JtRmRTaLNo-sQOpy8t0regdrri7Sk';
-   var location = lat + ',' + long;
+   //var location = lat + ',' + long;
    var radius = 1000;
    var sensor = false;
    var types = "atm";
    var keyword = "VietinBank";
 
    var https = require('https');
-   var url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" + "key=" + key + "&location=" + location + "&radius=" + radius + "&sensor=" + sensor + "&types=" + types + "&keyword=" + keyword;
+   var url = "https://maps.googleapis.com/maps/api/place/textsearch/json?" + "key=" + key + "&query=ATM+VietinBank+" + location + "&types=" + types + "&language=vi";
+   //var url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" + "key=" + key + "&location=" + location + "&radius=" + radius + "&sensor=" + sensor + "&types=" + types + "&keyword=" + keyword;
    console.log(url);
 
    https.get(url, function(response) {
@@ -381,7 +385,8 @@ class Scenario {
          });
 
        }
-
+       console.log(arrayLocationDisplay);
+       
        if (arrayLocationDisplay.length > 0) {
          var obj = {
            recipient: {
