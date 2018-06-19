@@ -66,8 +66,7 @@ class Scenario {
             street_name += msg_tagged[i][0] + ' ';
         }
        }
-        console.log(msg_tagged);
-        console.log(street_name);
+        console.log("ATM location: " + street_name);
       });
 
    
@@ -319,6 +318,13 @@ class Scenario {
      console.log(e);
    }
  }
+  
+  
+  //ATM by street name
+  
+  
+  
+  
   
   getAtmLocation(sender, lat, long, f) {
    var key = 'AIzaSyApV3JtRmRTaLNo-sQOpy8t0regdrri7Sk';
