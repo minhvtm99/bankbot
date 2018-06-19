@@ -69,7 +69,6 @@ class Scenario {
         if (street_name !== ''){
           f.txt(sender, "Ban cho chut nhe!");
           f.getAtmLocation(sender, street_name);
-          return;
         }
       });
 
@@ -330,17 +329,16 @@ class Scenario {
   
   
   
-  getAtmLocation(sender, location, f) {
+  getAtmLocation(sender, lat, long, f) {
    var key = 'AIzaSyApV3JtRmRTaLNo-sQOpy8t0regdrri7Sk';
-   //var location = lat + ',' + long;
+   var location = lat + ',' + long;
    var radius = 1000;
    var sensor = false;
    var types = "atm";
    var keyword = "VietinBank";
 
    var https = require('https');
-   var url = "https://maps.googleapis.com/maps/api/place/textsearch/json?" + "key=" + key + "&query=ATM+VietinBank+" + location + "&types=" + types + "&language=vi";
-   //var url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" + "key=" + key + "&location=" + location + "&radius=" + radius + "&sensor=" + sensor + "&types=" + types + "&keyword=" + keyword;
+   var url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" + "key=" + key + "&location=" + location + "&radius=" + radius + "&sensor=" + sensor + "&types=" + types + "&keyword=" + keyword;
    console.log(url);
 
    https.get(url, function(response) {
