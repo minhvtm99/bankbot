@@ -67,8 +67,8 @@ class Scenario {
         console.log("Desired ATM location: " + street_name);
         
         if (street_name !== ''){
-          f.text(sender, "AAAAAAA" );
-          f.findATMnear(sender, street_name);
+          f.txt(sender, "AAAAAAA" );
+          //f.findATMnear(sender, street_name);
           return;
         }
 
