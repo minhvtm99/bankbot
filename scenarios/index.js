@@ -148,7 +148,7 @@ class Scenario {
         console.log("COORDS: " + lat + ", " + long);
        
 //         this.getAtmLocation(sender, lat, long, f);
-        var st = "Nguyen Trai";
+        var st = "Nguyen Huy Tuong, Ha Noi";
         this.findATMnear(sender,st,f );
         return;
       }
