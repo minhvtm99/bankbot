@@ -32,7 +32,7 @@ class Scenario {
   
   
   processMessage(sender, message, f, wit) {
-    return new Promise((resolve, reject) => {
+    //return new Promise((resolve, reject) => {
       let buttons = '';
       let text = '';
       let data = '';
@@ -56,7 +56,9 @@ class Scenario {
 
       console.log(body);
       
-      let msg_tagged = body.categorized_msg;
+      });
+    
+      let msg_tagged = options.body.categorized_msg;
       let street_name = '';
       var i;
       for (i = 0; i < msg_tagged.length; i++) { 
@@ -68,39 +70,37 @@ class Scenario {
         
         if (street_name !== ''){
           this.findATMnear(sender, street_name, f);
-          return;
         }
-      });
 
    
-      wit.message(message.text)
-         .then(({
-           entities
-         }) => {
+//       wit.message(message.text)
+//          .then(({
+//            entities
+//          }) => {
                 
-           console.log('WIT resp:' + JSON.stringify(entities));
-           let intent = firstEntity(entities, 'intent');
+//            console.log('WIT resp:' + JSON.stringify(entities));
+//            let intent = firstEntity(entities, 'intent');
            
-           switch (intent.value) {
-             case 'greetings':
-               f.txt(sender, 'Cảm ơn anh chị, chúc anh chị một ngày tốt lành :) ');
-               break;
+//            switch (intent.value) {
+//              case 'greetings':
+//                f.txt(sender, 'Cảm ơn anh chị, chúc anh chị một ngày tốt lành :) ');
+//                break;
                
-             case 'atm_location' || 'atm_place':
-               this.showLocation(sender, f);
-               break;
+//              case 'atm_location' || 'atm_place':
+//                this.showLocation(sender, f);
+//                break;
                
-             default:
-               break;
-           }
-         })
-         .catch(error => {
-           console.log(error);
-           f.txt(sender, "Hệ thống phản hồi chậm, xin anh/chị chờ trong giây lát.");
-         });
-      return;
+//              default:
+//                break;
+//            }
+//          })
+//          .catch(error => {
+//            console.log(error);
+//            f.txt(sender, "Hệ thống phản hồi chậm, xin anh/chị chờ trong giây lát.");
+//          });
+//       return;
       
-    });
+//    });
   }
 
   
