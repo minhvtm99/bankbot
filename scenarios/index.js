@@ -40,38 +40,38 @@ class Scenario {
       console.log(JSON.stringify(message));
       
       
-      var request = require("request");
-      let msg_content = message.text;
-      var options = { method: 'POST',
-      url: 'https://bankbotapi.herokuapp.com/message_categorize',
-      headers: 
-      { 'postman-token': '94080799-6b58-9785-2c2d-5e50ed758bcd',
-        'cache-control': 'no-cache',
-        'content-type': 'application/json' },
-      body: { message: msg_content },
-      json: true };
+//       var request = require("request");
+//       let msg_content = message.text;
+//       var options = { method: 'POST',
+//       url: 'https://bankbotapi.herokuapp.com/message_categorize',
+//       headers: 
+//       { 'postman-token': '94080799-6b58-9785-2c2d-5e50ed758bcd',
+//         'cache-control': 'no-cache',
+//         'content-type': 'application/json' },
+//       body: { message: msg_content },
+//       json: true };
       
-      request(options, function (error, response, body) {
-          if (error) throw new Error(error);
+//       request(options, function (error, response, body) {
+//           if (error) throw new Error(error);
 
-      console.log(body);
+//       console.log(body);
         
-      let msg_tagged = body.categorized_msg;
-      let street_name = '';
-      var i;
-      for (i = 0; i < msg_tagged.length; i++) { 
-        if (msg_tagged[i][1] === 'Name'){
-            street_name += msg_tagged[i][0] + ' ';
-        }
-       }
-        console.log("Desired ATM location: " + street_name);
+//       let msg_tagged = body.categorized_msg;
+//       let street_name = '';
+//       var i;
+//       for (i = 0; i < msg_tagged.length; i++) { 
+//         if (msg_tagged[i][1] === 'Name'){
+//             street_name += msg_tagged[i][0] + ' ';
+//         }
+//        }
+//         console.log("Desired ATM location: " + street_name);
         
-        if (street_name !== ''){
-          this.findATMnear(sender, street_name, f);
-        }
+//         if (street_name !== ''){
+//           this.findATMnear(sender, street_name, f);
+//         }
 
       
-      });
+//       });
     
    
       wit.message(message.text)
