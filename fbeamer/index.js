@@ -90,7 +90,7 @@ class FBeamer {
 			if (!error && JSON.parse(body).success) {
 				console.log("Subscribed to the page!");
 			} else {
-				console.log(error);
+				console.log("subscribe: "+ !error);
 			}
 		});
 	}
