@@ -72,31 +72,31 @@ class Scenario {
       });
 
    
-      wit.message(message.text)
-         .then(({
-           entities
-         }) => {
+//       wit.message(message.text)
+//          .then(({
+//            entities
+//          }) => {
                 
-           console.log('WIT resp:' + JSON.stringify(entities));
-           let intent = firstEntity(entities, 'intent');
+//            console.log('WIT resp:' + JSON.stringify(entities));
+//            let intent = firstEntity(entities, 'intent');
            
-           switch (intent.value) {
-             case 'greetings':
-               f.txt(sender, 'Cảm ơn anh chị, chúc anh chị một ngày tốt lành :) ');
-               break;
+//            switch (intent.value) {
+//              case 'greetings':
+//                f.txt(sender, 'Cảm ơn anh chị, chúc anh chị một ngày tốt lành :) ');
+//                break;
                
-             case 'atm_location' || 'atm_place':
-               this.showLocation(sender, f);
-               break;
+//              case 'atm_location' || 'atm_place':
+//                this.showLocation(sender, f);
+//                break;
                
-             default:
-               break;
-           }
-         })
-         .catch(error => {
-           console.log(error);
-           f.txt(sender, "Hệ thống phản hồi chậm, xin anh/chị chờ trong giây lát.");
-         });
+//              default:
+//                break;
+//            }
+//          })
+//          .catch(error => {
+//            console.log(error);
+//            f.txt(sender, "Hệ thống phản hồi chậm, xin anh/chị chờ trong giây lát.");
+//          });
       return;
       
     });
