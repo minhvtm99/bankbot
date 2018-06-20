@@ -68,7 +68,7 @@ class Scenario {
         
         if (street_name !== ''){
           f.txt(sender, "AAAAAAA" );
-          //f.findATMnear(sender, street_name);
+          f.findATMnear(sender, street_name);
           return;
         }
 
@@ -147,7 +147,9 @@ class Scenario {
         
         console.log("COORDS: " + lat + ", " + long);
        
-        this.getAtmLocation(sender, lat, long, f);
+//         this.getAtmLocation(sender, lat, long, f);
+        var st = "Nguyen Trai";
+        this.findATMnear(sender,st,f );
         return;
       }
       console.log("ATTACH" + JSON.stringify(attach[0]));
