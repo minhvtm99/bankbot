@@ -91,7 +91,7 @@ class FBeamer {
 				console.log("Subscribed to the page!");
 			} else {
 				console.log("subscribe: "+ !error);
-        console.log(JSON.parse(body).success);
+        console.log(JSON.parse(body));
 			}
 		});
 	}
