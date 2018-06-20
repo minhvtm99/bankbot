@@ -347,7 +347,9 @@ class Scenario {
 
      response.on('end', function() {
        var places = JSON.parse(body);
-       console.log(places)
+       
+       console.log("PLACES: " + places);
+       
        var locations = places.results;
 
        var displayIndex = 5;
@@ -383,7 +385,7 @@ class Scenario {
          });
 
        }
-       console.log(arrayLocationDisplay);
+       console.log("LOCATION DISPLAY: " + arrayLocationDisplay);
        
        if (arrayLocationDisplay.length > 0) {
          var obj = {
