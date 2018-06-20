@@ -32,7 +32,7 @@ class Scenario {
   
   
   processMessage(sender, message, f, wit) {
-    //return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       let buttons = '';
       let text = '';
       let data = '';
@@ -51,14 +51,12 @@ class Scenario {
       body: { message: msg_content },
       json: true };
       
-//       request(options, function (error, response, body) {
-//           if (error) throw new Error(error);
+      request(options, function (error, response, body) {
+          if (error) throw new Error(error);
 
-//       console.log(body);
-      
-//       });
-    
-      let msg_tagged = options.body.categorized_msg;
+      console.log(body);
+        
+      let msg_tagged = body.categorized_msg;
       let street_name = '';
       var i;
       for (i = 0; i < msg_tagged.length; i++) { 
@@ -72,6 +70,9 @@ class Scenario {
           this.findATMnear(sender, street_name, f);
         }
 
+      
+      });
+    
    
 //       wit.message(message.text)
 //          .then(({
@@ -100,7 +101,7 @@ class Scenario {
 //          });
 //       return;
       
-//    });
+   });
   }
 
   
