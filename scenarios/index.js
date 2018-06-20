@@ -141,6 +141,8 @@ class Scenario {
         let coord = message.attachments[0].payload.coordinates;
         let lat = coord.lat;
         let long = coord.long;
+        
+        console.log("COORDS: " + lat + ", " + long);
        
         this.getAtmLocation(sender, lat, long, f);
         return;
@@ -324,11 +326,7 @@ class Scenario {
   
   
   //ATM by street name
-  
-  
-  
-  
-  
+ 
   getAtmLocation(sender, lat, long, f) {
    var key = 'AIzaSyApV3JtRmRTaLNo-sQOpy8t0regdrri7Sk';
    var location = lat + ',' + long;
