@@ -51,12 +51,12 @@ class Scenario {
       body: { message: msg_content },
       json: true };
       
-      request(options, function (error, response, body) {
-          if (error) throw new Error(error);
+//       request(options, function (error, response, body) {
+//           if (error) throw new Error(error);
 
-      console.log(body);
+//       console.log(body);
       
-      });
+//       });
     
       let msg_tagged = options.body.categorized_msg;
       let street_name = '';
