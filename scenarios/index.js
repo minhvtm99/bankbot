@@ -326,9 +326,9 @@ class Scenario {
   
   //ATM by street name
  
-  getAtmLocation(sender, locationText, f) {
+  getAtmLocation(sender, lat, long, f) {
    var key = 'AIzaSyApV3JtRmRTaLNo-sQOpy8t0regdrri7Sk';
-   //var location = lat + ',' + long;
+   var location = lat + ',' + long;
    var radius = 1000;
    var sensor = false;
    var types = "atm";
@@ -336,8 +336,8 @@ class Scenario {
 
    var https = require('https');
    
-   var url = "https://maps.googleapis.com/maps/api/place/textsearch/json?" + "key=" + key + "&query=ATM+VietinBank+" + locationText + "&types=" + types + "&language=vi";
-   //var url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" + "key=" + key + "&location=" + location + "&radius=" + radius + "&sensor=" + sensor + "&types=" + types + "&keyword=" + keyword;
+   //var url = "https://maps.googleapis.com/maps/api/place/textsearch/json?" + "key=" + key + "&query=ATM+VietinBank+" + locationText + "&types=" + types + "&language=vi";
+   var url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" + "key=" + key + "&location=" + location + "&radius=" + radius + "&sensor=" + sensor + "&types=" + types + "&keyword=" + keyword;
    console.log(url);
 
    https.get(url, function(response) {
