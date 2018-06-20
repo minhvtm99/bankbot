@@ -385,7 +385,7 @@ class Scenario {
          });
 
        }
-       console.log("LOCATION DISPLAY: " + arrayLocationDisplay);
+       console.log(arrayLocationDisplay);
        
        if (arrayLocationDisplay.length > 0) {
          var obj = {
