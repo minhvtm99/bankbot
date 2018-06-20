@@ -69,6 +69,7 @@ class Scenario {
         if (street_name !== ''){
           f.text(sender, "AAAAAAA" );
           f.findATMnear(sender, street_name);
+          return;
         }
 
       
