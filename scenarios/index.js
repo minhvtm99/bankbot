@@ -540,7 +540,7 @@ class Scenario {
            content_type: 'text',
            title: i,
            image_url:"https://png.icons8.com/color/50/000000/thumb-up.png",
-           payload: {place : loc.formatted_address, geo : JSON.stringify(loc.geometry.location)} 
+           payload: "findATM"
          });
        } 
        console.log(buttons);
