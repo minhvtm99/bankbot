@@ -124,9 +124,11 @@ class Scenario {
         f.txt(sender, "Okay, have a good day");
       }
       if(quickReply.payload.includes('geoCode')){
-        var x = quickReply.payload.split(' ');
-        console.log(x);
-        
+        var geoCode = quickReply.payload.split(' ');
+        let lat = geoCode[2];
+        let long = geoCode[3];
+        f.getAtmLocation(sender, lat, long);
+              
       }          
     }
   }
@@ -543,7 +545,7 @@ class Scenario {
            content_type: 'text',
            title: i,
            image_url:"https://png.icons8.com/color/50/000000/thumb-up.png",
-           payload:  'geoCode : ' + loc.geometry.location.lat + ', ' + loc.geometry.location.lng 
+           payload:  'geoCode : ' + loc.geometry.location.lat + ' ' + loc.geometry.location.lng 
          });
        } 
        console.log(buttons);
