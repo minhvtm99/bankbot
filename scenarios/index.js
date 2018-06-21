@@ -157,7 +157,7 @@ class Scenario {
 //         this.getAtmLocation(sender, lat, long, f);
         var st = "Nguyen Hue";
  //       this.findATMnear(sender,st,f );
-        this.findGeoLoc(sender, st, f)
+        this.findGeoLoc(sender, st, f);     
         return;
       }
       console.log("ATTACH" + JSON.stringify(attach[0]));
