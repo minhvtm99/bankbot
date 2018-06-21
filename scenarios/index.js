@@ -527,37 +527,35 @@ class Scenario {
        
        var locations = places.results;
        
-    let text = "Bạn muốn tìm ATM ở? ";
+    let text = "Bạn muốn tìm ATM ở địa chỉ cụ thể nào sau đây?";
        let buttons = []
        for (var i = 0; i < locations.length; i++) {
-         var loc = locations[i].formatted_address;
+         var loc = locations[i];
          console.log(loc);
          
-         text += ' ' + i + '. ' + loc;
+         text += 'Chọn ' + i + 'để tìm ATM ở ' + loc.formatted_address;
          console.log(text);
 
          buttons.push({
            content_type: 'text',
            title: i,
-           image_url:'https://icons8.com/icon/46457/question-mark-outline',
-           payload: loc 
+           image_url:"https://png.icons8.com/color/50/000000/thumb-up.png",
+           payload: {place : loc.formatted_address, geo : loc.geometry.location} 
          });
        } 
        console.log(buttons);
        if(buttons.length > 0){
-         //console.log('getAtmLocation: ' + i + ' >>> ' + JSON.stringify(displayLoc));
-         //var gmapUrl = "https://www.google.com/maps/dir/" + location + "/" + targetLoc;
-
+         
              try {
                 f.quick(sender, {
                           text,
                           buttons
                          });
+               
              } catch (e) {
+               
           console.log(JSON.stringify(e));
          }
-         
-         
          
        } else {
          f.txt(sender, 'Không tìm thấy địa điểm nào phù hợp với yêu cầu của anh/chị');
