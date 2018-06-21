@@ -127,7 +127,9 @@ class Scenario {
         var geoCode = quickReply.payload.split(' ');
         let lat = geoCode[2];
         let long = geoCode[3];
-        f.getAtmLocation(sender, lat, long);
+        console.log(lat + long);
+        this.getAtmLocation(sender, lat, long, f);
+        return;
               
       }          
     }
