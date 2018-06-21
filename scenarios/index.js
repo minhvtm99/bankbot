@@ -67,7 +67,7 @@ class Scenario {
         console.log("Desired ATM location: " + street_name);
         
         if (street_name !== ''){
-          f.txt(sender, "AAAAAAA" );
+          //f.txt(sender, "AAAAAAA" );
           this.findGeoLoc(sender, street_name, f);
           return;
         }
