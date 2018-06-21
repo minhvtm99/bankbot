@@ -535,6 +535,7 @@ class Scenario {
          console.log(loc);
          
          text += i + '. ' + loc;
+         console.log(text);
 
          buttons.push({
            content_type: 'text',
