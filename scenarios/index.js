@@ -335,7 +335,8 @@ class Scenario {
     var key = 'AIzaSyApV3JtRmRTaLNo-sQOpy8t0regdrri7Sk';
     var types = 'atm';
     var https = require('https');
-    var url = "https://maps.googleapis.com/maps/api/place/textsearch/json?" + "key=" + key + "&query=ATM+VietinBank+" + location + "&types=" + types + "&language=vi";
+    var radius = 5000
+    var url = "https://maps.googleapis.com/maps/api/place/textsearch/json?" + "key=" + key + "&query=ATM+VietinBank+" + location + "&radius=" + radius + "&types=" + types + "&language=vi";
     console.log(url); 
     
     https.get(url, function(response) {
