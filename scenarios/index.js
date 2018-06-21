@@ -148,8 +148,9 @@ class Scenario {
         console.log("COORDS: " + lat + ", " + long);
        
 //         this.getAtmLocation(sender, lat, long, f);
-        var st = "Nguyen Huy Tuong, Thanh Xuan, Hanoi";
-        this.findATMnear(sender,st,f );
+        var st = "Nguyen Hue";
+ //       this.findATMnear(sender,st,f );
+        this.findGeoLoc(sender, st, f)
         return;
       }
       console.log("ATTACH" + JSON.stringify(attach[0]));
@@ -509,6 +510,83 @@ class Scenario {
    });
  }
   
+  findGeoLoc(sender, street, f){
+    var url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + street + '&key=AIzaSyApV3JtRmRTaLNo-sQOpy8t0regdrri7Sk';
+    var https = require('https');
+    
+     https.get(url, function(response) {
+     var body = '';
+     response.on('data', function(chunk) {
+       body += chunk;
+     });
+
+     response.on('end', function() {
+       var places = JSON.parse(body);
+       
+       console.log(places);
+       
+       var locations = places.results;
+
+       var arrayLocationDisplay = [];
+
+       for (var i = 0; i < locations.length; i++) {
+         var displayLoc = locations[i];
+         //console.log('getAtmLocation: ' + i + ' >>> ' + JSON.stringify(displayLoc));
+         var targetLoc = displayLoc.geometry.location.lat + ',' + displayLoc.geometry.location.lng;
+         var gmapUrl = "https://www.google.com/maps/dir/" + location + "/" + targetLoc;
+         var imgUrl = "https://www.maketecheasier.com/assets/uploads/2017/07/google-maps-alternatives-featured.jpg";
+
+         arrayLocationDisplay.push({
+           title: displayLoc.name,
+           image_url: imgUrl,
+           subtitle: displayLoc.vicinity,
+           default_action: {
+             type: "web_url",
+             url: gmapUrl,
+             //messenger_extensions: true,
+             //webview_height_ratio: "tall",
+             //fallback_url: "https://peterssendreceiveapp.ngrok.io/"
+           },
+           buttons: [{
+             type: "web_url",
+             url: gmapUrl,
+             title: "Chỉ dẫn"
+           }]
+         });
+
+       }
+       console.log(arrayLocationDisplay);
+       
+       if (arrayLocationDisplay.length > 0) {
+         var obj = {
+           recipient: {
+             id: sender
+           },
+           message: {
+             attachment: {
+               type: "template",
+               payload: {
+                 template_type: "generic",
+                 elements: arrayLocationDisplay
+               }
+             }
+           }
+         }
+
+         f.sendNews(obj)
+           .catch(error => console.log('getAtmLocation: ' + error));
+       } else {
+         f.txt(sender, 'Không tìm thấy địa điểm nào phù hợp với yêu cầu của anh/chị');
+       }
+
+       return locations;
+     });
+   }).on('error', function(e) {
+     console.log("getAtmLocation Got error: " + e.message);
+     return;
+   });
+
+  }
   
 }
 
