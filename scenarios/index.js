@@ -530,27 +530,23 @@ class Scenario {
        var arrayLocationDisplay = [];
 
        for (var i = 0; i < locations.length; i++) {
-         var displayLoc = locations[i];
+         var loc = locations[i].formatted_address;
          //console.log('getAtmLocation: ' + i + ' >>> ' + JSON.stringify(displayLoc));
-         var targetLoc = displayLoc.geometry.location.lat + ',' + displayLoc.geometry.location.lng;
-         var gmapUrl = "https://www.google.com/maps/dir/" + location + "/" + targetLoc;
+         //var gmapUrl = "https://www.google.com/maps/dir/" + location + "/" + targetLoc;
          var imgUrl = "https://www.maketecheasier.com/assets/uploads/2017/07/google-maps-alternatives-featured.jpg";
 
          arrayLocationDisplay.push({
-           title: displayLoc.name,
+           title: loc,
            image_url: imgUrl,
-           subtitle: displayLoc.vicinity,
            default_action: {
-             type: "web_url",
-             url: gmapUrl,
+             type: "text"
              //messenger_extensions: true,
              //webview_height_ratio: "tall",
              //fallback_url: "https://peterssendreceiveapp.ngrok.io/"
            },
            buttons: [{
-             type: "web_url",
-             url: gmapUrl,
-             title: "Chỉ dẫn"
+             type: "text",
+             title: loc
            }]
          });
 
