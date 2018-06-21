@@ -530,10 +530,11 @@ class Scenario {
        
     let text = "Bạn muốn tìm ATM ở địa điểm nào sau đây? ";
        let buttons = []
-       for (var i = 0; i < locations.length; i++) {
+       for (var i = 1; i < locations.length + 1; i++) {
          var loc = locations[i].formatted_address;
          console.log(loc);
-         console.log(typeof loc);
+         
+         text += i + '. ' + loc;
 
          buttons.push({
            content_type: 'text',
