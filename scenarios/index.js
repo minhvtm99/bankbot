@@ -68,7 +68,7 @@ class Scenario {
         
         if (street_name !== ''){
           f.txt(sender, "AAAAAAA" );
-          f.findATMnear(sender, street_name);
+          this.findGeoLoc(sender, street_name, f);
           return;
         }
 
