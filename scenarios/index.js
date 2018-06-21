@@ -527,50 +527,35 @@ class Scenario {
        
        var locations = places.results;
 
-       var arrayLocationDisplay = [];
-
+       
+    let text = "Bạn muốn tìm ATM ở địa điểm nào sau đây? ";
+       
+       let buttons = []
        for (var i = 0; i < locations.length; i++) {
          var loc = locations[i].formatted_address;
+         buttons.push({
+           content_type: 'text',
+           title: loc.toString,
+           image_url:'https://icons8.com/icon/46457/question-mark-outline',
+           payload: loc.toString     
+         });
+       } 
+       console.log(buttons);
+       if(buttons.length > 0){
          //console.log('getAtmLocation: ' + i + ' >>> ' + JSON.stringify(displayLoc));
          //var gmapUrl = "https://www.google.com/maps/dir/" + location + "/" + targetLoc;
-         var imgUrl = "https://www.maketecheasier.com/assets/uploads/2017/07/google-maps-alternatives-featured.jpg";
 
-         arrayLocationDisplay.push({
-           title: loc,
-           image_url: imgUrl,
-           default_action: {
-             type: "text"
-             //messenger_extensions: true,
-             //webview_height_ratio: "tall",
-             //fallback_url: "https://peterssendreceiveapp.ngrok.io/"
-           },
-           buttons: [{
-             type: "text",
-             title: loc
-           }]
-         });
-
-       }
-       console.log(arrayLocationDisplay);
-       
-       if (arrayLocationDisplay.length > 0) {
-         var obj = {
-           recipient: {
-             id: sender
-           },
-           message: {
-             attachment: {
-               type: "template",
-               payload: {
-                 template_type: "generic",
-                 elements: arrayLocationDisplay
-               }
-             }
-           }
+             try {
+                f.quick(sender, {
+                          text,
+                          buttons
+                         });
+             } catch (e) {
+          console.log(JSON.stringify(e));
          }
-
-         f.sendNews(obj)
-           .catch(error => console.log('getAtmLocation: ' + error));
+         
+         
+         
        } else {
          f.txt(sender, 'Không tìm thấy địa điểm nào phù hợp với yêu cầu của anh/chị');
        }
