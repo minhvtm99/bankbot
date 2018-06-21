@@ -526,7 +526,9 @@ class Scenario {
   }
 
   findGeoLoc(sender, street, f) {
+    
     var url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + street + '&key=AIzaSyApV3JtRmRTaLNo-sQOpy8t0regdrri7Sk';
+    console.log("aaaaaa:" + url);
     var https = require('https');
 
     https.get(url, function(response) {
@@ -543,7 +545,7 @@ class Scenario {
         var locations = places.results;
 
         let text = "Bạn muốn tìm ATM ở địa chỉ cụ thể nào sau đây?";
-        let buttons = []
+        let buttons = [];
         for (var i = 0; i < locations.length; i++) {
           var loc = locations[i];
           console.log(loc);
