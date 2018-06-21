@@ -526,15 +526,15 @@ class Scenario {
        //console.log(places);
        
        var locations = places.results;
-
+       var max_idx = locations.length + 1;
        
     let text = "Bạn muốn tìm ATM ở địa điểm nào sau đây? ";
        let buttons = []
-       for (var i = 1; i < locations.length + 1; i++) {
+       for (var i = 1; i < max_idx; i++) {
          var loc = locations[i].formatted_address;
          console.log(loc);
          
-         text += i + '. ' + loc;
+         text += ' ' + i + '. ' + loc;
          console.log(text);
 
          buttons.push({
