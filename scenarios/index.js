@@ -526,11 +526,10 @@ class Scenario {
        //console.log(places);
        
        var locations = places.results;
-       var max_idx = locations.length + 1;
        
     let text = "Bạn muốn tìm ATM ở? ";
        let buttons = []
-       for (var i = 1; i < max_idx; i++) {
+       for (var i = 0; i < locations.length; i++) {
          var loc = locations[i].formatted_address;
          console.log(loc);
          
