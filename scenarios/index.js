@@ -537,9 +537,9 @@ class Scenario {
 
          buttons.push({
            content_type: 'text',
-           title: loc.toString,
+           title: loc,
            image_url:'https://icons8.com/icon/46457/question-mark-outline',
-           payload: loc.toString     
+           payload: loc 
          });
        } 
        console.log(buttons);
