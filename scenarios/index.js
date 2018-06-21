@@ -533,7 +533,8 @@ class Scenario {
        for (var i = 0; i < locations.length; i++) {
          var loc = locations[i].formatted_address;
          console.log(loc);
-         
+         console.log(typeof loc);
+
          buttons.push({
            content_type: 'text',
            title: loc.toString,
