@@ -533,14 +533,14 @@ class Scenario {
          var loc = locations[i];
          console.log(loc);
          
-         text += 'Chọn ' + i + 'để tìm ATM ở ' + loc.formatted_address;
+         text += ' Chọn ' + i + ' để tìm ATM ở ' + loc.formatted_address;
          console.log(text);
 
          buttons.push({
            content_type: 'text',
            title: i,
            image_url:"https://png.icons8.com/color/50/000000/thumb-up.png",
-           payload: {place : loc.formatted_address, geo : loc.geometry.location} 
+           payload: {place : loc.formatted_address, geo : JSON.stringify(loc.geometry.location)} 
          });
        } 
        console.log(buttons);
