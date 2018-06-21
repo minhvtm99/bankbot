@@ -523,16 +523,17 @@ class Scenario {
      response.on('end', function() {
        var places = JSON.parse(body);
        
-       console.log(places);
+       //console.log(places);
        
        var locations = places.results;
 
        
     let text = "Bạn muốn tìm ATM ở địa điểm nào sau đây? ";
-       
        let buttons = []
        for (var i = 0; i < locations.length; i++) {
          var loc = locations[i].formatted_address;
+         console.log(loc);
+         
          buttons.push({
            content_type: 'text',
            title: loc.toString,
