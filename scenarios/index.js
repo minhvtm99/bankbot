@@ -56,62 +56,63 @@ class Scenario {
         json: true
       };
 
-      request(options, function(error, response, body) {
-        if (error) throw new Error(error);
+//       request(options, function(error, response, body) {
+//         if (error) throw new Error(error);
 
-        console.log(body);
+//         console.log(body);
 
-        let msg_tagged = body.categorized_msg;
-        var street_name = '';
-        var i;
-        for (i = 0; i < msg_tagged.length; i++) {
-          if (msg_tagged[i][1] === 'Name') {
-            street_name += msg_tagged[i][0] + ' ';
-          }
-        }
-        console.log("Desired ATM location: " + street_name);
-
+//         let msg_tagged = body.categorized_msg;
+//         var street_name = '';
+//         var i;
+//         for (i = 0; i < msg_tagged.length; i++) {
+//           if (msg_tagged[i][1] === 'Name') {
+//             street_name += msg_tagged[i][0] + ' ';
+//           }
+//         }
+//         console.log("Desired ATM location: " + street_name);
+        var street_name = 'extractProperty()';
+        street_name = extractProperty()
         if (street_name !== '') {
           //f.txt(sender, "AAAAAAA" );
           console.log("call find Geocode " + street_name);
           this.findGeoLoc(sender, street_name, f);
           console.log("end call find Geocode");
           return;
-          
+
         }
 
 
       });
 
 
-//       wit.message(message.text)
-//         .then(({
-//           entities
-//         }) => {
+      //       wit.message(message.text)
+      //         .then(({
+      //           entities
+      //         }) => {
 
-//           console.log('WIT resp:' + JSON.stringify(entities));
-//           let intent = firstEntity(entities, 'intent');
+      //           console.log('WIT resp:' + JSON.stringify(entities));
+      //           let intent = firstEntity(entities, 'intent');
 
-//           switch (intent.value) {
-//             case 'greetings':
-//               f.txt(sender, 'Cảm ơn anh chị, chúc anh chị một ngày tốt lành :) ');
-//               break;
+      //           switch (intent.value) {
+      //             case 'greetings':
+      //               f.txt(sender, 'Cảm ơn anh chị, chúc anh chị một ngày tốt lành :) ');
+      //               break;
 
-//             case 'atm_location' || 'atm_place':
-//               this.showLocation(sender, f);
-//               break;
+      //             case 'atm_location' || 'atm_place':
+      //               this.showLocation(sender, f);
+      //               break;
 
-//             default:
-//               break;
-//           }
-//         })
-//         .catch(error => {
-//           console.log(error);
-//           f.txt(sender, "Hệ thống phản hồi chậm, xin anh/chị chờ trong giây lát.");
-//         });
-//       return;
+      //             default:
+      //               break;
+      //           }
+      //         })
+      //         .catch(error => {
+      //           console.log(error);
+      //           f.txt(sender, "Hệ thống phản hồi chậm, xin anh/chị chờ trong giây lát.");
+      //         });
+      //       return;
 
-    });
+//     });
   }
 
 
@@ -526,7 +527,7 @@ class Scenario {
   }
 
   findGeoLoc(sender, street, f) {
-    
+
     var url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + street + '&key=AIzaSyApV3JtRmRTaLNo-sQOpy8t0regdrri7Sk';
     console.log("aaaaaa:" + url);
     var https = require('https');
@@ -585,6 +586,26 @@ class Scenario {
       return;
     });
 
+  }
+
+  extractProperty(options, body) {
+    var request = require("request");
+    
+    request(options, function(error, response, body) {
+      if (error) throw new Error(error);
+
+      console.log(body);
+
+      let msg_tagged = body.categorized_msg;
+      var street_name = '';
+      var i;
+      for (i = 0; i < msg_tagged.length; i++) {
+        if (msg_tagged[i][1] === 'Name') {
+          street_name += msg_tagged[i][0] + ' ';
+        }
+      }
+      console.log("Desired ATM location: " + street_name);
+    });
   }
 
 }
