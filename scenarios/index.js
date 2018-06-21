@@ -528,7 +528,7 @@ class Scenario {
        var locations = places.results;
        var max_idx = locations.length + 1;
        
-    let text = "Bạn muốn tìm ATM ở địa điểm nào sau đây? ";
+    let text = "Bạn muốn tìm ATM ở? ";
        let buttons = []
        for (var i = 1; i < max_idx; i++) {
          var loc = locations[i].formatted_address;
