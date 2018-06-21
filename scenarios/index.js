@@ -123,8 +123,9 @@ class Scenario {
       if(quickReply.payload === 'QnA_NO') {
         f.txt(sender, "Okay, have a good day");
       }
-      
-      
+      if(quickReply.payload == 'findATM'){
+        
+      }          
     }
   }
 
@@ -540,7 +541,7 @@ class Scenario {
            content_type: 'text',
            title: i,
            image_url:"https://png.icons8.com/color/50/000000/thumb-up.png",
-           payload: "findATM"
+           payload: 'geoCode' + loc.geometry.location.lat + loc.geometry.location.lng
          });
        } 
        console.log(buttons);
