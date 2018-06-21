@@ -2,11 +2,11 @@
 
 //Get entities
 const firstEntity = (entities, name) => {
- return entities &&
-   entities[name] &&
-   Array.isArray(entities[name]) &&
-   entities[name] &&
-   entities[name][0];
+  return entities &&
+    entities[name] &&
+    Array.isArray(entities[name]) &&
+    entities[name] &&
+    entities[name][0];
 }
 
 //Scen class
@@ -24,13 +24,13 @@ class Scenario {
       //
       if (postback && postback.payload) {
         console.log('postback.payload :' + postback.payload);
-        
-        
+
+
       }
     });
-  }  
-  
-  
+  }
+
+
   processMessage(sender, message, f, wit) {
     return new Promise((resolve, reject) => {
       let buttons = '';
@@ -38,75 +38,82 @@ class Scenario {
       let data = '';
       console.log(message.text);
       console.log(JSON.stringify(message));
-      
-      
+
+
       var request = require("request");
       let msg_content = message.text;
-      var options = { method: 'POST',
-      url: 'https://bankbotapi.herokuapp.com/message_categorize',
-      headers: 
-      { 'postman-token': '94080799-6b58-9785-2c2d-5e50ed758bcd',
-        'cache-control': 'no-cache',
-        'content-type': 'application/json' },
-      body: { message: msg_content },
-      json: true };
-      
-      request(options, function (error, response, body) {
-          if (error) throw new Error(error);
+      var options = {
+        method: 'POST',
+        url: 'https://bankbotapi.herokuapp.com/message_categorize',
+        headers: {
+          'postman-token': '94080799-6b58-9785-2c2d-5e50ed758bcd',
+          'cache-control': 'no-cache',
+          'content-type': 'application/json'
+        },
+        body: {
+          message: msg_content
+        },
+        json: true
+      };
 
-      console.log(body);
-        
-      let msg_tagged = body.categorized_msg;
-      let street_name = '';
-      var i;
-      for (i = 0; i < msg_tagged.length; i++) { 
-        if (msg_tagged[i][1] === 'Name'){
+      request(options, function(error, response, body) {
+        if (error) throw new Error(error);
+
+        console.log(body);
+
+        let msg_tagged = body.categorized_msg;
+        var street_name = '';
+        var i;
+        for (i = 0; i < msg_tagged.length; i++) {
+          if (msg_tagged[i][1] === 'Name') {
             street_name += msg_tagged[i][0] + ' ';
+          }
         }
-       }
         console.log("Desired ATM location: " + street_name);
-        
-        if (street_name !== ''){
+
+        if (street_name !== '') {
           //f.txt(sender, "AAAAAAA" );
+          console.log("call find Geocode " + street_name);
           this.findGeoLoc(sender, street_name, f);
-          return;
+           console.log("end call find Geocode");
+          
         }
 
-      
+
       });
-    
-   
+
+
       wit.message(message.text)
-         .then(({
-           entities
-         }) => {
-                
-           console.log('WIT resp:' + JSON.stringify(entities));
-           let intent = firstEntity(entities, 'intent');
-           
-           switch (intent.value) {
-             case 'greetings':
-               f.txt(sender, 'Cảm ơn anh chị, chúc anh chị một ngày tốt lành :) ');
-               break;
-               
-             case 'atm_location' || 'atm_place':
-               this.showLocation(sender, f);
-               break;
-               
-             default:
-               break;
-           }
-         })
-         .catch(error => {
-           console.log(error);
-           f.txt(sender, "Hệ thống phản hồi chậm, xin anh/chị chờ trong giây lát.");
-         });
+        .then(({
+          entities
+        }) => {
+
+          console.log('WIT resp:' + JSON.stringify(entities));
+          let intent = firstEntity(entities, 'intent');
+
+          switch (intent.value) {
+            case 'greetings':
+              f.txt(sender, 'Cảm ơn anh chị, chúc anh chị một ngày tốt lành :) ');
+              break;
+
+            case 'atm_location' || 'atm_place':
+              this.showLocation(sender, f);
+              break;
+
+            default:
+              break;
+          }
+        })
+        .catch(error => {
+          console.log(error);
+          f.txt(sender, "Hệ thống phản hồi chậm, xin anh/chị chờ trong giây lát.");
+        });
       return;
-      
-   });
+
+    });
   }
 
-  
+
   processQuickreply(sender, message, f) {
     //console.log('processQuickreply WIT resp :');
     let buttons = '';
@@ -115,23 +122,23 @@ class Scenario {
 
     if (message && message.quick_reply) {
       let quickReply = message.quick_reply;
-      
-      if(quickReply.payload === 'QnA_YES') {
-        f.txt(sender,"Bạn hãy gửi 3 để chọn sử dụng dịch vụ của VietinBank, 4 để nhận thông tin, 5 để tìm ATM gần nhất");
+
+      if (quickReply.payload === 'QnA_YES') {
+        f.txt(sender, "Bạn hãy gửi 3 để chọn sử dụng dịch vụ của VietinBank, 4 để nhận thông tin, 5 để tìm ATM gần nhất");
       }
-      
-      if(quickReply.payload === 'QnA_NO') {
+
+      if (quickReply.payload === 'QnA_NO') {
         f.txt(sender, "Okay, have a good day");
       }
-      if(quickReply.payload.includes('geoCode')){
+      if (quickReply.payload.includes('geoCode')) {
         var geoCode = quickReply.payload.split(' ');
         let lat = geoCode[2];
         let long = geoCode[3];
         console.log(lat + long);
         this.getAtmLocation(sender, lat, long, f);
         return;
-              
-      }          
+
+      }
     }
   }
 
@@ -144,24 +151,24 @@ class Scenario {
 
     if (message && message.attachments) {
       let attach = message.attachments;
-      
-      if (attach[0].type === 'location'){
+
+      if (attach[0].type === 'location') {
         //f.txt(sender, "https://www.google.com/maps");
         //f.txt(sender, 'Ban tu google map nhe :D');
         let coord = message.attachments[0].payload.coordinates;
         let lat = coord.lat;
         let long = coord.long;
-        
+
         console.log("COORDS: " + lat + ", " + long);
-       
-//         this.getAtmLocation(sender, lat, long, f);
+
+        //         this.getAtmLocation(sender, lat, long, f);
         var st = "Nguyen Hue";
- //       this.findATMnear(sender,st,f );
-        this.findGeoLoc(sender, st, f);     
+        //       this.findATMnear(sender,st,f );
+        this.findGeoLoc(sender, st, f);
         return;
       }
       console.log("ATTACH" + JSON.stringify(attach[0]));
-    
+
 
     }
   }
@@ -199,7 +206,7 @@ class Scenario {
       console.log(JSON.stringify(e));
     }
   }
-  
+
   showRegister(sender, f) {
     let buttons = '';
     let text = '';
@@ -231,352 +238,352 @@ class Scenario {
       console.log(e);
     }
   }
-  
+
   news(id, f) {
 
-   let obj = {
-     recipient: {
-       id: id
-     },
-     message: {
-       attachment: {
-         type: "template",
-         payload: {
-           template_type: "generic",
-           elements: [{
-               title: "VietinBank SME Club: Sự đón nhận từ cộng đồng doanh nghiệp",
-               image_url: "http://cafefcdn.com/thumb_w/650/2017/vtb-1482312845555-1491215019360.jpg",
-               subtitle: "Vừa ra mắt trong tháng 7/2017, VietinBank SME Club - Câu lạc bộ các thành viên là khách hàng doanh nghiệp vừa và nhỏ (SME) đã nhận được những lời ngợi khen từ khách hàng...",
-               default_action: {
-                 type: "web_url",
-                 url: "http://www.vietinbank.vn/vn/tin-tuc/VietinBank-SME-Club-Su-don-nhan-tu-cong-dong-doanh-nghiep-20170909135227.html"
-                 //messenger_extensions: true,
-                 //webview_height_ratio: "tall",
-                 //fallback_url: "https://ebanking.vietinbank.vn/rcas/portal/web/retail/bflogin"
-               },
-               buttons: [{
-                 type: "web_url",
-                 url: "http://www.vietinbank.vn/vn/tin-tuc/VietinBank-SME-Club-Su-don-nhan-tu-cong-dong-doanh-nghiep-20170909135227.html",
-                 title: "Xem chi tiết"
-               }, {
-                 type: "postback",
-                 title: "Đăng ký nhận tin",
-                 payload: "NEWS_BOT"
-               }]
-             },
-             {
-               title: "VietinBank tuyển dụng gần 300 nhân sự cho chi nhánh",
-               image_url: "https://thebank.vn/uploads/2014/03/Vietinbank-tuyen-dung.jpg",
-               subtitle: "Đáp ứng yêu cầu nhân sự cho chiến lược phát triển, Ngân hàng TMCP Công Thương Việt Nam (VietinBank) tuyển dụng gần 300 chỉ tiêu tại các vị trí nghiệp vụ và hỗ trợ tín dụng cho các chi nhánh trên toàn hệ thống...",
-               default_action: {
-                 type: "web_url",
-                 url: "https://www.vietinbank.vn/vn/tin-tuc/VietinBank-tuyen-dung-gan-300-nhan-su-cho-chi-nhanh-20170807233640.html",
-                 //messenger_extensions: true,
-                 //webview_height_ratio: "tall",
-                 //fallback_url: "https://peterssendreceiveapp.ngrok.io/"
-               },
-               buttons: [{
-                 type: "web_url",
-                 url: "https://www.vietinbank.vn/vn/tin-tuc/VietinBank-tuyen-dung-gan-300-nhan-su-cho-chi-nhanh-20170807233640.html",
-                 title: "Xem chi tiết"
-               }, {
-                 type: "postback",
-                 title: "Đăng ký nhận tin",
-                 payload: "NEWS_BOT"
-               }]
-             },
-             {
-               title: "VietinBank SME Club: Sự đón nhận từ cộng đồng doanh nghiệp",
-               image_url: "http://image.bnews.vn/MediaUpload/Medium/2017/05/04/090646-bo-nhan-dien-thuong-hieu-vietinbank-2017-1.jpg",
-               subtitle: "Vừa ra mắt trong tháng 7/2017, VietinBank SME Club - Câu lạc bộ các thành viên là khách hàng doanh nghiệp vừa và nhỏ (SME) đã nhận được những lời ngợi khen từ khách hàng...",
-               default_action: {
-                 type: "web_url",
-                 url: "http://www.vietinbank.vn/vn/tin-tuc/VietinBank-SME-Club-Su-don-nhan-tu-cong-dong-doanh-nghiep-20170909135227.html",
-                 //messenger_extensions: true,
-                 //webview_height_ratio: "tall",
-                 //fallback_url: "https://peterssendreceiveapp.ngrok.io/"
-               },
-               buttons: [{
-                 type: "web_url",
-                 url: "http://www.vietinbank.vn/vn/tin-tuc/VietinBank-SME-Club-Su-don-nhan-tu-cong-dong-doanh-nghiep-20170909135227.html",
-                 title: "Xem chi tiết"
-               }, {
-                 type: "postback",
-                 title: "Đăng ký nhận tin",
-                 payload: "NEWS_BOT"
-               }]
-             }
-           ]
-         }
-       }
-     }
-   }
+    let obj = {
+      recipient: {
+        id: id
+      },
+      message: {
+        attachment: {
+          type: "template",
+          payload: {
+            template_type: "generic",
+            elements: [{
+                title: "VietinBank SME Club: Sự đón nhận từ cộng đồng doanh nghiệp",
+                image_url: "http://cafefcdn.com/thumb_w/650/2017/vtb-1482312845555-1491215019360.jpg",
+                subtitle: "Vừa ra mắt trong tháng 7/2017, VietinBank SME Club - Câu lạc bộ các thành viên là khách hàng doanh nghiệp vừa và nhỏ (SME) đã nhận được những lời ngợi khen từ khách hàng...",
+                default_action: {
+                  type: "web_url",
+                  url: "http://www.vietinbank.vn/vn/tin-tuc/VietinBank-SME-Club-Su-don-nhan-tu-cong-dong-doanh-nghiep-20170909135227.html"
+                  //messenger_extensions: true,
+                  //webview_height_ratio: "tall",
+                  //fallback_url: "https://ebanking.vietinbank.vn/rcas/portal/web/retail/bflogin"
+                },
+                buttons: [{
+                  type: "web_url",
+                  url: "http://www.vietinbank.vn/vn/tin-tuc/VietinBank-SME-Club-Su-don-nhan-tu-cong-dong-doanh-nghiep-20170909135227.html",
+                  title: "Xem chi tiết"
+                }, {
+                  type: "postback",
+                  title: "Đăng ký nhận tin",
+                  payload: "NEWS_BOT"
+                }]
+              },
+              {
+                title: "VietinBank tuyển dụng gần 300 nhân sự cho chi nhánh",
+                image_url: "https://thebank.vn/uploads/2014/03/Vietinbank-tuyen-dung.jpg",
+                subtitle: "Đáp ứng yêu cầu nhân sự cho chiến lược phát triển, Ngân hàng TMCP Công Thương Việt Nam (VietinBank) tuyển dụng gần 300 chỉ tiêu tại các vị trí nghiệp vụ và hỗ trợ tín dụng cho các chi nhánh trên toàn hệ thống...",
+                default_action: {
+                  type: "web_url",
+                  url: "https://www.vietinbank.vn/vn/tin-tuc/VietinBank-tuyen-dung-gan-300-nhan-su-cho-chi-nhanh-20170807233640.html",
+                  //messenger_extensions: true,
+                  //webview_height_ratio: "tall",
+                  //fallback_url: "https://peterssendreceiveapp.ngrok.io/"
+                },
+                buttons: [{
+                  type: "web_url",
+                  url: "https://www.vietinbank.vn/vn/tin-tuc/VietinBank-tuyen-dung-gan-300-nhan-su-cho-chi-nhanh-20170807233640.html",
+                  title: "Xem chi tiết"
+                }, {
+                  type: "postback",
+                  title: "Đăng ký nhận tin",
+                  payload: "NEWS_BOT"
+                }]
+              },
+              {
+                title: "VietinBank SME Club: Sự đón nhận từ cộng đồng doanh nghiệp",
+                image_url: "http://image.bnews.vn/MediaUpload/Medium/2017/05/04/090646-bo-nhan-dien-thuong-hieu-vietinbank-2017-1.jpg",
+                subtitle: "Vừa ra mắt trong tháng 7/2017, VietinBank SME Club - Câu lạc bộ các thành viên là khách hàng doanh nghiệp vừa và nhỏ (SME) đã nhận được những lời ngợi khen từ khách hàng...",
+                default_action: {
+                  type: "web_url",
+                  url: "http://www.vietinbank.vn/vn/tin-tuc/VietinBank-SME-Club-Su-don-nhan-tu-cong-dong-doanh-nghiep-20170909135227.html",
+                  //messenger_extensions: true,
+                  //webview_height_ratio: "tall",
+                  //fallback_url: "https://peterssendreceiveapp.ngrok.io/"
+                },
+                buttons: [{
+                  type: "web_url",
+                  url: "http://www.vietinbank.vn/vn/tin-tuc/VietinBank-SME-Club-Su-don-nhan-tu-cong-dong-doanh-nghiep-20170909135227.html",
+                  title: "Xem chi tiết"
+                }, {
+                  type: "postback",
+                  title: "Đăng ký nhận tin",
+                  payload: "NEWS_BOT"
+                }]
+              }
+            ]
+          }
+        }
+      }
+    }
 
-   console.log('--> news data: ' + JSON.stringify(obj));
+    console.log('--> news data: ' + JSON.stringify(obj));
 
-   f.sendNews(obj)
-     .catch(error => console.log('news: ' + error));
- }
-  
+    f.sendNews(obj)
+      .catch(error => console.log('news: ' + error));
+  }
+
   showLocation(sender, f) {
-   let buttons = '';
-   let text = '';
-   let data = '';
-   try {
-     buttons = [{
-       content_type: "location",
-     }];
-     text = 'Hãy gửi vị trí bạn muốn tìm các địa điểm giao dịch gần nhất của VietinBank';
+    let buttons = '';
+    let text = '';
+    let data = '';
+    try {
+      buttons = [{
+        content_type: "location",
+      }];
+      text = 'Hãy gửi vị trí bạn muốn tìm các địa điểm giao dịch gần nhất của VietinBank';
 
-     f.quick(sender, {
-       text,
-       buttons
-     });
-   } catch (e) {
-     console.log(e);
-   }
- }
-  
-  
+      f.quick(sender, {
+        text,
+        buttons
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+
   //ATM by street name
-  findATMnear(sender,location, f){
+  findATMnear(sender, location, f) {
     var key = 'AIzaSyApV3JtRmRTaLNo-sQOpy8t0regdrri7Sk';
     var types = 'atm';
     var https = require('https');
     var radius = 1000
     var url = "https://maps.googleapis.com/maps/api/place/textsearch/json?" + "key=" + key + "&query=ATM+VietinBank+" + location + "&radius=" + radius + "&types=" + types + "&language=vi";
-    console.log(url); 
-    
+    console.log(url);
+
     https.get(url, function(response) {
-     var body = '';
-     response.on('data', function(chunk) {
-       body += chunk;
-     });
+      var body = '';
+      response.on('data', function(chunk) {
+        body += chunk;
+      });
 
-     response.on('end', function() {
-       var places = JSON.parse(body);
-       
-       console.log(places);
-       
-       var locations = places.results;
+      response.on('end', function() {
+        var places = JSON.parse(body);
 
-       var displayIndex = 5;
-       if (displayIndex > locations.length) {
-         displayIndex = locations.length;
-       }
+        console.log(places);
 
-       var arrayLocationDisplay = [];
+        var locations = places.results;
 
-       for (var i = 0; i < displayIndex; i++) {
-         var displayLoc = locations[i];
-         //console.log('getAtmLocation: ' + i + ' >>> ' + JSON.stringify(displayLoc));
-         var targetLoc = displayLoc.geometry.location.lat + ',' + displayLoc.geometry.location.lng;
-         var gmapUrl = "https://www.aworkoutroutine.com/push-pull-legs-split/";
-         var imgUrl = "https://www.maketecheasier.com/assets/uploads/2017/07/google-maps-alternatives-featured.jpg";
+        var displayIndex = 5;
+        if (displayIndex > locations.length) {
+          displayIndex = locations.length;
+        }
 
-         arrayLocationDisplay.push({
-           title: displayLoc.name,
-           image_url: imgUrl,
-           subtitle: displayLoc.vicinity,
-           default_action: {
-             type: "web_url",
-             url: gmapUrl,
-             //messenger_extensions: true,
-             //webview_height_ratio: "tall",
-             //fallback_url: "https://peterssendreceiveapp.ngrok.io/"
-           },
-           buttons: [{
-             type: "web_url",
-             url: gmapUrl,
-             title: "Chỉ dẫn"
-           }]
-         });
+        var arrayLocationDisplay = [];
 
-       }
-       console.log(arrayLocationDisplay);
-       
-       if (arrayLocationDisplay.length > 0) {
-         var obj = {
-           recipient: {
-             id: sender
-           },
-           message: {
-             attachment: {
-               type: "template",
-               payload: {
-                 template_type: "generic",
-                 elements: arrayLocationDisplay
-               }
-             }
-           }
-         }
+        for (var i = 0; i < displayIndex; i++) {
+          var displayLoc = locations[i];
+          //console.log('getAtmLocation: ' + i + ' >>> ' + JSON.stringify(displayLoc));
+          var targetLoc = displayLoc.geometry.location.lat + ',' + displayLoc.geometry.location.lng;
+          var gmapUrl = "https://www.aworkoutroutine.com/push-pull-legs-split/";
+          var imgUrl = "https://www.maketecheasier.com/assets/uploads/2017/07/google-maps-alternatives-featured.jpg";
 
-         f.sendNews(obj)
-           .catch(error => console.log('getAtmLocation: ' + error));
-       } else {
-         f.txt(sender, 'Không tìm thấy địa điểm nào phù hợp với yêu cầu của anh/chị');
-       }
+          arrayLocationDisplay.push({
+            title: displayLoc.name,
+            image_url: imgUrl,
+            subtitle: displayLoc.vicinity,
+            default_action: {
+              type: "web_url",
+              url: gmapUrl,
+              //messenger_extensions: true,
+              //webview_height_ratio: "tall",
+              //fallback_url: "https://peterssendreceiveapp.ngrok.io/"
+            },
+            buttons: [{
+              type: "web_url",
+              url: gmapUrl,
+              title: "Chỉ dẫn"
+            }]
+          });
 
-       return locations;
-     });
-   }).on('error', function(e) {
-     console.log("getAtmLocation Got error: " + e.message);
-     return;
-   });
+        }
+        console.log(arrayLocationDisplay);
+
+        if (arrayLocationDisplay.length > 0) {
+          var obj = {
+            recipient: {
+              id: sender
+            },
+            message: {
+              attachment: {
+                type: "template",
+                payload: {
+                  template_type: "generic",
+                  elements: arrayLocationDisplay
+                }
+              }
+            }
+          }
+
+          f.sendNews(obj)
+            .catch(error => console.log('getAtmLocation: ' + error));
+        } else {
+          f.txt(sender, 'Không tìm thấy địa điểm nào phù hợp với yêu cầu của anh/chị');
+        }
+
+        return locations;
+      });
+    }).on('error', function(e) {
+      console.log("getAtmLocation Got error: " + e.message);
+      return;
+    });
   }
- 
+
   getAtmLocation(sender, lat, long, f) {
-   var key = 'AIzaSyApV3JtRmRTaLNo-sQOpy8t0regdrri7Sk';
-   var location = lat + ',' + long;
-   var radius = 1000;
-   var sensor = false;
-   var types = "atm";
-   var keyword = "VietinBank";
+    var key = 'AIzaSyApV3JtRmRTaLNo-sQOpy8t0regdrri7Sk';
+    var location = lat + ',' + long;
+    var radius = 1000;
+    var sensor = false;
+    var types = "atm";
+    var keyword = "VietinBank";
 
-   var https = require('https');
-   
-   //var url = "https://maps.googleapis.com/maps/api/place/textsearch/json?" + "key=" + key + "&query=ATM+VietinBank+" + locationText + "&types=" + types + "&language=vi";
-   var url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" + "key=" + key + "&location=" + location + "&radius=" + radius + "&sensor=" + sensor + "&types=" + types + "&keyword=" + keyword;
-   console.log(url);
+    var https = require('https');
 
-   https.get(url, function(response) {
-     var body = '';
-     response.on('data', function(chunk) {
-       body += chunk;
-     });
+    //var url = "https://maps.googleapis.com/maps/api/place/textsearch/json?" + "key=" + key + "&query=ATM+VietinBank+" + locationText + "&types=" + types + "&language=vi";
+    var url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" + "key=" + key + "&location=" + location + "&radius=" + radius + "&sensor=" + sensor + "&types=" + types + "&keyword=" + keyword;
+    console.log(url);
 
-     response.on('end', function() {
-       var places = JSON.parse(body);
-       
-       console.log(places);
-       
-       var locations = places.results;
+    https.get(url, function(response) {
+      var body = '';
+      response.on('data', function(chunk) {
+        body += chunk;
+      });
 
-       var displayIndex = 5;
-       if (displayIndex > locations.length) {
-         displayIndex = locations.length;
-       }
+      response.on('end', function() {
+        var places = JSON.parse(body);
 
-       var arrayLocationDisplay = [];
+        console.log(places);
 
-       for (var i = 0; i < displayIndex; i++) {
-         var displayLoc = locations[i];
-         //console.log('getAtmLocation: ' + i + ' >>> ' + JSON.stringify(displayLoc));
-         var targetLoc = displayLoc.geometry.location.lat + ',' + displayLoc.geometry.location.lng;
-         var gmapUrl = "https://www.google.com/maps/dir/" + location + "/" + targetLoc;
-         var imgUrl = "https://www.maketecheasier.com/assets/uploads/2017/07/google-maps-alternatives-featured.jpg";
+        var locations = places.results;
 
-         arrayLocationDisplay.push({
-           title: displayLoc.name,
-           image_url: imgUrl,
-           subtitle: displayLoc.vicinity,
-           default_action: {
-             type: "web_url",
-             url: gmapUrl,
-             //messenger_extensions: true,
-             //webview_height_ratio: "tall",
-             //fallback_url: "https://peterssendreceiveapp.ngrok.io/"
-           },
-           buttons: [{
-             type: "web_url",
-             url: gmapUrl,
-             title: "Chỉ dẫn"
-           }]
-         });
+        var displayIndex = 5;
+        if (displayIndex > locations.length) {
+          displayIndex = locations.length;
+        }
 
-       }
-       console.log(arrayLocationDisplay);
-       
-       if (arrayLocationDisplay.length > 0) {
-         var obj = {
-           recipient: {
-             id: sender
-           },
-           message: {
-             attachment: {
-               type: "template",
-               payload: {
-                 template_type: "generic",
-                 elements: arrayLocationDisplay
-               }
-             }
-           }
-         }
+        var arrayLocationDisplay = [];
 
-         f.sendNews(obj)
-           .catch(error => console.log('getAtmLocation: ' + error));
-       } else {
-         f.txt(sender, 'Không tìm thấy địa điểm nào phù hợp với yêu cầu của anh/chị');
-       }
+        for (var i = 0; i < displayIndex; i++) {
+          var displayLoc = locations[i];
+          //console.log('getAtmLocation: ' + i + ' >>> ' + JSON.stringify(displayLoc));
+          var targetLoc = displayLoc.geometry.location.lat + ',' + displayLoc.geometry.location.lng;
+          var gmapUrl = "https://www.google.com/maps/dir/" + location + "/" + targetLoc;
+          var imgUrl = "https://www.maketecheasier.com/assets/uploads/2017/07/google-maps-alternatives-featured.jpg";
 
-       return locations;
-     });
-   }).on('error', function(e) {
-     console.log("getAtmLocation Got error: " + e.message);
-     return;
-   });
- }
-  
-  findGeoLoc(sender, street, f){
+          arrayLocationDisplay.push({
+            title: displayLoc.name,
+            image_url: imgUrl,
+            subtitle: displayLoc.vicinity,
+            default_action: {
+              type: "web_url",
+              url: gmapUrl,
+              //messenger_extensions: true,
+              //webview_height_ratio: "tall",
+              //fallback_url: "https://peterssendreceiveapp.ngrok.io/"
+            },
+            buttons: [{
+              type: "web_url",
+              url: gmapUrl,
+              title: "Chỉ dẫn"
+            }]
+          });
+
+        }
+        console.log(arrayLocationDisplay);
+
+        if (arrayLocationDisplay.length > 0) {
+          var obj = {
+            recipient: {
+              id: sender
+            },
+            message: {
+              attachment: {
+                type: "template",
+                payload: {
+                  template_type: "generic",
+                  elements: arrayLocationDisplay
+                }
+              }
+            }
+          }
+
+          f.sendNews(obj)
+            .catch(error => console.log('getAtmLocation: ' + error));
+        } else {
+          f.txt(sender, 'Không tìm thấy địa điểm nào phù hợp với yêu cầu của anh/chị');
+        }
+
+        return locations;
+      });
+    }).on('error', function(e) {
+      console.log("getAtmLocation Got error: " + e.message);
+      return;
+    });
+  }
+
+  findGeoLoc(sender, street, f) {
     var url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + street + '&key=AIzaSyApV3JtRmRTaLNo-sQOpy8t0regdrri7Sk';
     var https = require('https');
-    
-     https.get(url, function(response) {
-     var body = '';
-     response.on('data', function(chunk) {
-       body += chunk;
-     });
 
-     response.on('end', function() {
-       var places = JSON.parse(body);
-       
-       //console.log(places);
-       
-       var locations = places.results;
-       
-    let text = "Bạn muốn tìm ATM ở địa chỉ cụ thể nào sau đây?";
-       let buttons = []
-       for (var i = 0; i < locations.length; i++) {
-         var loc = locations[i];
-         console.log(loc);
-         
-         text += ' Chọn ' + i + ' để tìm ATM ở ' + loc.formatted_address;
-         console.log(text);
+    https.get(url, function(response) {
+      var body = '';
+      response.on('data', function(chunk) {
+        body += chunk;
+      });
 
-         buttons.push({
-           content_type: 'text',
-           title: i,
-           image_url:"https://png.icons8.com/color/50/000000/thumb-up.png",
-           payload:  'geoCode : ' + loc.geometry.location.lat + ' ' + loc.geometry.location.lng 
-         });
-       } 
-       console.log(buttons);
-       if(buttons.length > 0){
-         
-             try {
-                f.quick(sender, {
-                          text,
-                          buttons
-                         });
-               
-             } catch (e) {
-               
-          console.log(JSON.stringify(e));
-         }
-         
-       } else {
-         f.txt(sender, 'Không tìm thấy địa điểm nào phù hợp với yêu cầu của anh/chị');
-       }
+      response.on('end', function() {
+        var places = JSON.parse(body);
 
-       return locations;
-     });
-   }).on('error', function(e) {
-     console.log("getAtmLocation Got error: " + e.message);
-     return;
-   });
+        //console.log(places);
+
+        var locations = places.results;
+
+        let text = "Bạn muốn tìm ATM ở địa chỉ cụ thể nào sau đây?";
+        let buttons = []
+        for (var i = 0; i < locations.length; i++) {
+          var loc = locations[i];
+          console.log(loc);
+
+          text += ' Chọn ' + i + ' để tìm ATM ở ' + loc.formatted_address;
+          console.log(text);
+
+          buttons.push({
+            content_type: 'text',
+            title: i,
+            image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
+            payload: 'geoCode : ' + loc.geometry.location.lat + ' ' + loc.geometry.location.lng
+          });
+        }
+        console.log(buttons);
+        if (buttons.length > 0) {
+
+          try {
+            f.quick(sender, {
+              text,
+              buttons
+            });
+
+          } catch (e) {
+
+            console.log(JSON.stringify(e));
+          }
+
+        } else {
+          f.txt(sender, 'Không tìm thấy địa điểm nào phù hợp với yêu cầu của anh/chị');
+        }
+
+        return locations;
+      });
+    }).on('error', function(e) {
+      console.log("getAtmLocation Got error: " + e.message);
+      return;
+    });
 
   }
-  
+
 }
 
 module.exports = Scenario;
