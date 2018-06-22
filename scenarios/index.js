@@ -103,7 +103,7 @@ class Scenario {
           console.log(err);
         } else {
           var x = extractProperty(body);
-          console.log(x);
+          console.log("sssssssssssss" + x);
         }
       });
       
