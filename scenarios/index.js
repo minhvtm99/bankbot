@@ -26,20 +26,16 @@ function extractProperty(body) {
 
 var request = require("request");
 
-function getMyBody(url, callback) {
-  request({
-    url: url,
-    json: true
-  }, function(error, response, body) {
+function getMyBody(options, callback) {
+  request(options, function(error, response, body) {
     if (error || response.statusCode !== 200) {
       return callback(error || {
         statusCode: response.statusCode
       });
     }
-    callback(null, JSON.parse(body));
+    callback(null, body);
   });
 }
-
 
 //Scen class
 class Scenario {
@@ -102,7 +98,7 @@ class Scenario {
       //           }
       //         }
       //         console.log("Desired ATM location: " + street_name);
-      getMyBody('https://bankbotapi.herokuapp.com/message_categorize', function(err, body) {
+      getMyBody(options, function(err, body) {
         if (err) {
           console.log(err);
         } else {
@@ -110,7 +106,7 @@ class Scenario {
           console.log(x);
         }
       });
-
+      
       var street_name = '';
       street_name = extractProperty(options);
       console.log("Desired ATM location: " + street_name);
