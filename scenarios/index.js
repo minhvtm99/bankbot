@@ -102,23 +102,20 @@ class Scenario {
         if (err) {
           console.log(err);
         } else {
-          var x = extractProperty(body);
-          console.log("sssssssssssss" + x);
+          var street_name = extractProperty(body);
+          console.log("Desired ATM location: " + street_name);
+          if (street_name !== '') {
+            //f.txt(sender, "AAAAAAA" );
+            console.log("call find Geocode " + street_name);
+            this.findGeoLoc(sender, street_name, f);
+            console.log("end call find Geocode");
+            return;
+
+          }
         }
       });
-      
-      var street_name = '';
-      street_name = extractProperty(options);
-      console.log("Desired ATM location: " + street_name);
 
-      if (street_name !== '') {
-        //f.txt(sender, "AAAAAAA" );
-        console.log("call find Geocode " + street_name);
-        this.findGeoLoc(sender, street_name, f);
-        console.log("end call find Geocode");
-        return;
 
-      }
 
 
     });
