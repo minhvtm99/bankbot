@@ -9,6 +9,29 @@ const firstEntity = (entities, name) => {
     entities[name][0];
 }
 
+// get property
+function  extractProperty(options) {
+    var request = require("request");
+    
+    request(options, function(error, response, body) {
+      if (error) throw new Error(error);
+
+      console.log(body);
+
+      let msg_tagged = body.categorized_msg;
+      var street_name = '';
+      var i;
+      for (i = 0; i < msg_tagged.length; i++) {
+        if (msg_tagged[i][1] === 'Name') {
+          street_name += msg_tagged[i][0] + ' ';
+        }
+      }
+      console.log("Desired ATM location: " + street_name);
+      return street_name;
+    });
+  }
+
+
 //Scen class
 class Scenario {
   constructor(f) {
@@ -70,8 +93,11 @@ class Scenario {
 //           }
 //         }
 //         console.log("Desired ATM location: " + street_name);
+      
         var street_name = 'extractProperty()';
-        street_name = extractProperty()
+        street_name = extractProperty(options);
+        console.log("Desired ATM location: " + street_name);
+
         if (street_name !== '') {
           //f.txt(sender, "AAAAAAA" );
           console.log("call find Geocode " + street_name);
@@ -588,26 +614,7 @@ class Scenario {
 
   }
 
-  extractProperty(options, body) {
-    var request = require("request");
-    
-    request(options, function(error, response, body) {
-      if (error) throw new Error(error);
-
-      console.log(body);
-
-      let msg_tagged = body.categorized_msg;
-      var street_name = '';
-      var i;
-      for (i = 0; i < msg_tagged.length; i++) {
-        if (msg_tagged[i][1] === 'Name') {
-          street_name += msg_tagged[i][0] + ' ';
-        }
-      }
-      console.log("Desired ATM location: " + street_name);
-    });
-  }
-
+ 
 }
 
 module.exports = Scenario;
