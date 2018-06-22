@@ -10,27 +10,35 @@ const firstEntity = (entities, name) => {
 }
 
 // get property
-function  extractProperty(options) {
-    var request = require("request");
-    
-    request(options, function(error, response, body) {
-      if (error) throw new Error(error);
+function extractProperty(body) {
 
-      console.log(body);
-
-      let msg_tagged = body.categorized_msg;
-      var street_name = '';
-      var i;
-      for (i = 0; i < msg_tagged.length; i++) {
-        if (msg_tagged[i][1] === 'Name') {
-          street_name += msg_tagged[i][0] + ' ';
-        }
-      }
-      console.log("Desired ATM location: " + street_name);
-      return street_name;
-    });
-
+  let msg_tagged = body.categorized_msg;
+  var street_name = '';
+  var i;
+  for (i = 0; i < msg_tagged.length; i++) {
+    if (msg_tagged[i][1] === 'Name') {
+      street_name += msg_tagged[i][0] + ' ';
+    }
   }
+  console.log("Desired ATM location: " + street_name);
+  return street_name;
+}
+
+var request = require("request");
+
+function getMyBody(url, callback) {
+  request({
+    url: url,
+    json: true
+  }, function(error, response, body) {
+    if (error || response.statusCode !== 200) {
+      return callback(error || {
+        statusCode: response.statusCode
+      });
+    }
+    callback(null, JSON.parse(body));
+  });
+}
 
 
 //Scen class
@@ -80,66 +88,74 @@ class Scenario {
         json: true
       };
 
-//       request(options, function(error, response, body) {
-//         if (error) throw new Error(error);
+      //       request(options, function(error, response, body) {
+      //         if (error) throw new Error(error);
 
-//         console.log(body);
+      //         console.log(body);
 
-//         let msg_tagged = body.categorized_msg;
-//         var street_name = '';
-//         var i;
-//         for (i = 0; i < msg_tagged.length; i++) {
-//           if (msg_tagged[i][1] === 'Name') {
-//             street_name += msg_tagged[i][0] + ' ';
-//           }
-//         }
-//         console.log("Desired ATM location: " + street_name);
-      
-        var street_name = '';
-        street_name = extractProperty(options);
-        console.log("Desired ATM location: " + street_name);
-
-        if (street_name !== '') {
-          //f.txt(sender, "AAAAAAA" );
-          console.log("call find Geocode " + street_name);
-          this.findGeoLoc(sender, street_name, f);
-          console.log("end call find Geocode");
-          return;
-
+      //         let msg_tagged = body.categorized_msg;
+      //         var street_name = '';
+      //         var i;
+      //         for (i = 0; i < msg_tagged.length; i++) {
+      //           if (msg_tagged[i][1] === 'Name') {
+      //             street_name += msg_tagged[i][0] + ' ';
+      //           }
+      //         }
+      //         console.log("Desired ATM location: " + street_name);
+      getMyBody('https://bankbotapi.herokuapp.com/message_categorize', function(err, body) {
+        if (err) {
+          console.log(err);
+        } else {
+          var x = extractProperty(body);
+          console.log(x);
         }
-
-
       });
 
+      var street_name = '';
+      street_name = extractProperty(options);
+      console.log("Desired ATM location: " + street_name);
 
-      //       wit.message(message.text)
-      //         .then(({
-      //           entities
-      //         }) => {
+      if (street_name !== '') {
+        //f.txt(sender, "AAAAAAA" );
+        console.log("call find Geocode " + street_name);
+        this.findGeoLoc(sender, street_name, f);
+        console.log("end call find Geocode");
+        return;
 
-      //           console.log('WIT resp:' + JSON.stringify(entities));
-      //           let intent = firstEntity(entities, 'intent');
+      }
 
-      //           switch (intent.value) {
-      //             case 'greetings':
-      //               f.txt(sender, 'Cảm ơn anh chị, chúc anh chị một ngày tốt lành :) ');
-      //               break;
 
-      //             case 'atm_location' || 'atm_place':
-      //               this.showLocation(sender, f);
-      //               break;
+    });
 
-      //             default:
-      //               break;
-      //           }
-      //         })
-      //         .catch(error => {
-      //           console.log(error);
-      //           f.txt(sender, "Hệ thống phản hồi chậm, xin anh/chị chờ trong giây lát.");
-      //         });
-      //       return;
 
-//     });
+    //       wit.message(message.text)
+    //         .then(({
+    //           entities
+    //         }) => {
+
+    //           console.log('WIT resp:' + JSON.stringify(entities));
+    //           let intent = firstEntity(entities, 'intent');
+
+    //           switch (intent.value) {
+    //             case 'greetings':
+    //               f.txt(sender, 'Cảm ơn anh chị, chúc anh chị một ngày tốt lành :) ');
+    //               break;
+
+    //             case 'atm_location' || 'atm_place':
+    //               this.showLocation(sender, f);
+    //               break;
+
+    //             default:
+    //               break;
+    //           }
+    //         })
+    //         .catch(error => {
+    //           console.log(error);
+    //           f.txt(sender, "Hệ thống phản hồi chậm, xin anh/chị chờ trong giây lát.");
+    //         });
+    //       return;
+
+    //     });
   }
 
 
@@ -615,7 +631,7 @@ class Scenario {
 
   }
 
- 
+
 }
 
 module.exports = Scenario;
