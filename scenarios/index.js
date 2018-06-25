@@ -10,13 +10,12 @@ const firstEntity = (entities, name) => {
 }
 
 // get property
-function extractProperty(body) {
+function extractProperty(msg_tagged, property) {
 
-  let msg_tagged = body.categorized_msg;
   var street_name = '';
   var i;
   for (i = 0; i < msg_tagged.length; i++) {
-    if (msg_tagged[i][1] === 'Name') {
+    if (msg_tagged[i][1] === property) {
       street_name += msg_tagged[i][0] + ' ';
     }
   }
@@ -89,7 +88,9 @@ class Scenario {
         if (err) {
           console.log(err);
         } else {
-          var street_name = extractProperty(body);
+          let msg_tagged = body.categorized_msg;
+          console.log(msg_tagged);
+          var street_name = extractProperty(msg_tagged, 'Name');
           if (street_name !== '') {
             //f.txt(sender, "AAAAAAA" );
             console.log("call find Geocode " + street_name);
