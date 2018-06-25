@@ -98,7 +98,7 @@ class Scenario {
             
             //big test
             var unencoded = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + street_name + '&key=AIzaSyApV3JtRmRTaLNo-sQOpy8t0regdrri7Sk';
-            var url = encodeURI(url);
+            var url = encodeURI(unencoded);
 
     console.log("aaaaaa:" + url);
     var https = require('https');
