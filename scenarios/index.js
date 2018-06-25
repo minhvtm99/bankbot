@@ -95,8 +95,11 @@ class Scenario {
             //f.txt(sender, "AAAAAAA" );
             console.log("call find Geocode " + street_name);
 //             this.findGeoLoc(sender, street_name, f);
+            
             //big test
-            var url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + street_name + '&key=AIzaSyApV3JtRmRTaLNo-sQOpy8t0regdrri7Sk';
+            var unencoded = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + street_name + '&key=AIzaSyApV3JtRmRTaLNo-sQOpy8t0regdrri7Sk';
+            var url = encodeURI(url);
+
     console.log("aaaaaa:" + url);
     var https = require('https');
 
