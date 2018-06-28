@@ -9,18 +9,38 @@ const firstEntity = (entities, name) => {
     entities[name] &&
     entities[name][0];
 }
-
+//mongodb
 function doConnect() {
   var MongoClient = require('mongodb').MongoClient;
   var url = "mongodb://minhvtm99:alexisozil99@ds117691.mlab.com:17691/bankbotdev";
 
-  MongoClient.connect(url, { useNewUrlParser: true }, function(err, db)  {
+  MongoClient.connect(url, {
+    useNewUrlParser: true
+  }, function(err, db) {
     if (err) throw err;
     console.log("Database created!");
     db.close();
   });
 }
 doConnect()
+
+function createCollection() {
+  var MongoClient = require('mongodb').MongoClient;
+  var url = "mongodb://minhvtm99:alexisozil99@ds117691.mlab.com:17691/bankbotdev";
+
+  MongoClient.connect(url, function(err, db) {
+    if (err) throw err;
+    var dbo = db.db("mydb");
+    dbo.createCollection("customers", function(err, res) {
+      if (err) throw err;
+      console.log("Collection created!");
+      db.close();
+    });
+  });
+
+}
+
+createCollection()
 
 // get property
 function extractProperty(msg_tagged, property) {
@@ -78,7 +98,7 @@ class Scenario {
       let data = '';
       console.log(message.text);
       console.log(JSON.stringify(message));
-      
+
       var request = require("request");
       let msg_content = message.text;
       var options = {
