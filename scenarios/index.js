@@ -118,7 +118,20 @@ class Scenario {
       console.log(JSON.stringify(message));
       
       var sender_info = f.getSenderName(sender);
-      logMessage(sender_info);
+
+        var MongoClient = require('mongodb').MongoClient;
+  var url = "mongodb://minhvtm99:alexisozil99@ds117691.mlab.com:17691/bankbotdev";
+
+  MongoClient.connect(url, function(err, db) {
+    if (err) throw err;
+    var dbo = db.db("bankbotdev");
+    dbo.collection("customers").insertOne(sender_info, function(err, res) {
+      if (err) throw err;
+      console.log("1 document inserted");
+      db.close();
+    });
+  });
+      
       
 //       console.log()
 
