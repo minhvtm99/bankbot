@@ -26,6 +26,7 @@
     "underscore": "1.8.3",
     "wsdlrdr": "0.3.9",
     "xmldoc": "1.1.0",
-    "xregexp": "3.1.1"
+    "xregexp": "3.1.1",
+    "mongodb": "3.4.15"
   }
 }

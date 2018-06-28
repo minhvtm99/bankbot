@@ -76,7 +76,7 @@ class Scenario {
       let data = '';
       console.log(message.text);
       console.log(JSON.stringify(message));
-
+      
       mongo();
       
       var request = require("request");
