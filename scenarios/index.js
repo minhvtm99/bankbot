@@ -243,9 +243,10 @@ class Scenario {
           }
           
           else if(atm !== '' && street_name == ''){
-            f.txt("Bạn muốn tìm ATM ở khu vực nào?");
             var search = findMessage({'sender': sender});
             console.log(search);
+            f.txt(sender, "Bạn muốn tìm ATM ở khu vực nào?");
+
             
           }
           
