@@ -88,7 +88,7 @@ function extractProperty(msg_tagged, property) {
       street_name += msg_tagged[i][0] + ' ';
     }
   }
-  console.log("Desired ATM location: " + street_name);
+  console.log("Desired property: " + street_name);
   return street_name;
 }
 
@@ -167,8 +167,8 @@ class Scenario {
           var street_name = extractProperty(msg_tagged, 'Name');
           var atm = extractProperty(msg_tagged, 'ATM');
           
-          var prev_msg = findMessage({'sender': sender, 'request':'findATM'});
-          var prev_request = prev_msg.request;
+          var prev_request = findMessage({'sender': sender, 'request':'findATM'});
+          //var prev_request = prev_msg.request;
           console.log(prev_request);
           
           if (prev_request == 'findATM'){
