@@ -60,6 +60,24 @@ function logMessage(message) {
 
 }
 
+function findMessage(criteria){
+  var MongoClient = require('mongodb').MongoClient;
+  var url = "mongodb://minhvtm99:alexisozil99@ds117691.mlab.com:17691/bankbotdev";
+
+MongoClient.connect(url, function(err, db) {
+  if (err) throw err;
+  var dbo = db.db("bankbotdev");
+  var query = criteria;
+  dbo.collection("customers").find(query).toArray(function(err, result) {
+    if (err) throw err;
+    console.log(result);
+    db.close();
+    return result;
+
+  });
+});
+}
+
 // get property
 function extractProperty(msg_tagged, property) {
 
@@ -145,12 +163,14 @@ class Scenario {
         } else {
           let msg_tagged = body.categorized_msg;
           console.log(msg_tagged);
+          
           var street_name = extractProperty(msg_tagged, 'Name');
+          var atm = extractProperty(msg_tagged, 'ATM');
           
           logMessage({'sender': sender, 'message': message.text, 'message tagged': msg_tagged});
 
           
-          if (street_name !== '') {
+          if (street_name !== '' && atm !== '') {
             //f.txt(sender, "AAAAAAA" );
             console.log("call find Geocode " + street_name);
             //             this.findGeoLoc(sender, street_name, f);
@@ -221,6 +241,15 @@ class Scenario {
             return;
 
           }
+          
+          else if(atm !== '' && street_name == ''){
+            f.txt("Bạn muốn tìm ATM ở khu vực nào?");
+            var search = findMessage({'sender': sender});
+            console.log(search);
+            
+          }
+          
+          
         }
       });
 
