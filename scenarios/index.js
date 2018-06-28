@@ -125,7 +125,9 @@ class Scenario {
   MongoClient.connect(url, function(err, db) {
     if (err) throw err;
     var dbo = db.db("bankbotdev");
-    dbo.collection("customers").insertOne(sender_info, function(err, res) {
+    dbo.collection("customers").insertOne(sender_info, {
+    useNewUrlParser: true
+  }, function(err, res) {
       if (err) throw err;
       console.log("1 document inserted");
       db.close();
