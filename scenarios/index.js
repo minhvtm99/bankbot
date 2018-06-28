@@ -167,7 +167,8 @@ class Scenario {
           var street_name = extractProperty(msg_tagged, 'Name');
           var atm = extractProperty(msg_tagged, 'ATM');
           
-          var prev_request = findMessage({'sender': sender, 'request':'findATM'});
+          var prev_msg = findMessage({'sender': sender, 'request':'findATM'});
+          var prev_request = prev_msg.request;
           console.log(prev_request);
           
           if (prev_request == 'findATM'){
