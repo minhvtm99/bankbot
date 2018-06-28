@@ -130,7 +130,7 @@ class FBeamer {
 			  
 // 			  console.log('getSenderName: ' + JSON.stringify(profile));
 			  console.log('first_name: ' + first_name);
-				return profile;
+				return JSON.stringify(profile);
 			})
 			.catch(error => {
 				return '';
