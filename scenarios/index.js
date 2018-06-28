@@ -44,6 +44,22 @@ function createCollection() {
 
 createCollection()
 
+function logMessage(message) {
+  var MongoClient = require('mongodb').MongoClient;
+  var url = "mongodb://minhvtm99:alexisozil99@ds117691.mlab.com:17691/bankbotdev";
+
+  MongoClient.connect(url, function(err, db) {
+    if (err) throw err;
+    var dbo = db.db("bankbotdev");
+    dbo.collection("customers").insertOne(message, function(err, res) {
+      if (err) throw err;
+      console.log("1 document inserted");
+      db.close();
+    });
+  });
+
+}
+
 // get property
 function extractProperty(msg_tagged, property) {
 
@@ -100,6 +116,10 @@ class Scenario {
       let data = '';
       console.log(message.text);
       console.log(JSON.stringify(message));
+      
+      var sender_info = f.getSenderName(sender);
+      
+//       console.log()
 
       var request = require("request");
       let msg_content = message.text;
