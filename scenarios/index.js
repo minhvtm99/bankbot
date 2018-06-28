@@ -135,10 +135,10 @@ class Scenario {
       console.log(message.text);
       console.log(JSON.stringify(message));
       
-      var sender_info = f.getSenderName(sender);
+//       var sender_info = f.getSenderName(sender);
 
-		console.log('getSenderName: ' + JSON.stringify(sender_info));
-    console.log(sender_info);
+// 		console.log('getSenderName: ' + JSON.stringify(sender_info));
+//     console.log(sender_info);
 
       var request = require("request");
       let msg_content = message.text;
@@ -172,6 +172,7 @@ class Scenario {
           
           if (prev_request == 'findATM'){
             street_name = message.text;
+            atm = 'ATM';
           }
           
           if (street_name !== '' && atm !== '') {
