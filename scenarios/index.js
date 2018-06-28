@@ -122,7 +122,7 @@ class Scenario {
 		console.log('getSenderName: ' + JSON.stringify(sender_info));
     console.log(sender_info);
       
-      
+      logMessage({'sender': sender, 'message': message.text});
 //       console.log()
 
       var request = require("request");
