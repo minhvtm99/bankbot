@@ -27,6 +27,6 @@
     "wsdlrdr": "0.3.9",
     "xmldoc": "1.1.0",
     "xregexp": "3.1.1",
-    "mongodb": "3.4.15"
+    "mongod": "3.4.15"
   }
 }
