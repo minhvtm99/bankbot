@@ -30,7 +30,7 @@ function createCollection() {
 
   MongoClient.connect(url, function(err, db) {
     if (err) throw err;
-    var dbo = db.db("mydb");
+    var dbo = db.db("bankbotdev");
     dbo.createCollection("customers", function(err, res) {
       if (err) throw err;
       console.log("Collection created!");
