@@ -121,9 +121,6 @@ class Scenario {
 
 		console.log('getSenderName: ' + JSON.stringify(sender_info));
     console.log(sender_info);
-      
-      logMessage({'sender': sender, 'message': message.text});
-//       console.log()
 
       var request = require("request");
       let msg_content = message.text;
@@ -149,6 +146,10 @@ class Scenario {
           let msg_tagged = body.categorized_msg;
           console.log(msg_tagged);
           var street_name = extractProperty(msg_tagged, 'Name');
+          
+          logMessage({'sender': sender, 'message': message.text, 'message tagged': msg_tagged});
+
+          
           if (street_name !== '') {
             //f.txt(sender, "AAAAAAA" );
             console.log("call find Geocode " + street_name);
