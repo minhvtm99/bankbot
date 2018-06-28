@@ -150,7 +150,10 @@ class FBeamer {
 				// Iterate through the messaging Array
 				pageObj.messaging.forEach(msgEvent => {
 					let messageObj = {
-						sender: msgEvent.sender.id,
+						//sender: msgEvent.sender.id,
+            
+            sender: msgEvent.sender,
+
 						timeOfMessage: msgEvent.timestamp,
 						message: msgEvent.message || undefined,
 						postback: msgEvent.postback || undefined
