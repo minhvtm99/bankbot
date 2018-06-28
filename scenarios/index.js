@@ -118,6 +118,7 @@ class Scenario {
       console.log(JSON.stringify(message));
       
       var sender_info = f.getSenderName(sender);
+      logMessage(sender_info);
       
 //       console.log()
 
