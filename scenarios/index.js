@@ -167,8 +167,12 @@ class Scenario {
           var street_name = extractProperty(msg_tagged, 'Name');
           var atm = extractProperty(msg_tagged, 'ATM');
           
-          logMessage({'sender': sender, 'message': message.text, 'message tagged': msg_tagged});
-
+          var prev_request = findMessage({'sender': sender, 'request':'findATM'});
+          console.log(prev_request);
+          
+          if (prev_request == 'findATM'){
+            street_name = message.text;
+          }
           
           if (street_name !== '' && atm !== '') {
             //f.txt(sender, "AAAAAAA" );
@@ -243,8 +247,8 @@ class Scenario {
           }
           
           else if(atm !== '' && street_name == ''){
-            var search = findMessage({'sender': sender});
-            console.log(search);
+            
+            logMessage({'sender': sender, 'message': message.text, 'message tagged': msg_tagged, 'request':'findATM'});
             f.txt(sender, "Bạn muốn tìm ATM ở khu vực nào?");
 
             
