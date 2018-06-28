@@ -10,6 +10,19 @@ const firstEntity = (entities, name) => {
     entities[name][0];
 }
 
+const mongo = require('mongodb').MongoClient
+function doConnect() {
+ 	var url = 'mongodb://minhvtm201099:alexisozil99@ds117691.mlab.com:17691/bankbotdev';
+	mongo.connect(url, { useNewUrlParser: true }, (err, db) => {
+		if(err) { 
+			throw err
+		} else {
+			console.log('Successfully connected to MongoDB')
+		}
+	})
+}
+doConnect()
+
 // get property
 function extractProperty(msg_tagged, property) {
 
