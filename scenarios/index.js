@@ -1,15 +1,5 @@
 'use strict';
 
-function mongo() {
-  var MongoClient = require('mongodb').MongoClient;
-  var url = "mongodb://minhvtm201099:alexisozil99@ds117691.mlab.com:17691/bankbotdev";
-
-  MongoClient.connect(url, { useNewUrlParser: true }, function(err, db)  {
-    if (err) throw err;
-    console.log("Database created!");
-    db.close();
-  });
-}
 
 //Get entities
 const firstEntity = (entities, name) => {
@@ -76,8 +66,6 @@ class Scenario {
       let data = '';
       console.log(message.text);
       console.log(JSON.stringify(message));
-      
-      mongo();
       
       var request = require("request");
       let msg_content = message.text;
