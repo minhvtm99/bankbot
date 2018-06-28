@@ -1,12 +1,15 @@
 'use strict';
-var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://minhvtm201099:alexisozil99@ds117691.mlab.com:17691/bankbotdev";
 
-MongoClient.connect(url, function(err, db) {
-  if (err) throw err;
-  console.log("Database created!");
-  db.close();
-});
+function mongo() {
+  var MongoClient = require('mongodb').MongoClient;
+  var url = "mongodb://minhvtm201099:alexisozil99@ds117691.mlab.com:17691/bankbotdev";
+
+  MongoClient.connect(url, function(err, db) {
+    if (err) throw err;
+    console.log("Database created!");
+    db.close();
+  });
+}
 
 //Get entities
 const firstEntity = (entities, name) => {
@@ -74,7 +77,8 @@ class Scenario {
       console.log(message.text);
       console.log(JSON.stringify(message));
 
-
+      mongo();
+      
       var request = require("request");
       let msg_content = message.text;
       var options = {
@@ -102,68 +106,68 @@ class Scenario {
           if (street_name !== '') {
             //f.txt(sender, "AAAAAAA" );
             console.log("call find Geocode " + street_name);
-//             this.findGeoLoc(sender, street_name, f);
-            
+            //             this.findGeoLoc(sender, street_name, f);
+
             //big test
             var unencoded = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + street_name + '&key=AIzaSyApV3JtRmRTaLNo-sQOpy8t0regdrri7Sk';
             var url = encodeURI(unencoded);
 
-    console.log("aaaaaa:" + url);
-    var https = require('https');
+            console.log("aaaaaa:" + url);
+            var https = require('https');
 
-    https.get(url, function(response) {
-      var body = '';
-      response.on('data', function(chunk) {
-        body += chunk;
-      });
+            https.get(url, function(response) {
+              var body = '';
+              response.on('data', function(chunk) {
+                body += chunk;
+              });
 
-      response.on('end', function() {
-        var places = JSON.parse(body);
+              response.on('end', function() {
+                var places = JSON.parse(body);
 
-        //console.log(places);
+                //console.log(places);
 
-        var locations = places.results;
+                var locations = places.results;
 
-        let text = "Bạn muốn tìm ATM ở địa chỉ cụ thể nào sau đây?";
-        let buttons = [];
-        for (var i = 0; i < locations.length; i++) {
-          var loc = locations[i];
-          console.log(loc);
+                let text = "Bạn muốn tìm ATM ở địa chỉ cụ thể nào sau đây?";
+                let buttons = [];
+                for (var i = 0; i < locations.length; i++) {
+                  var loc = locations[i];
+                  console.log(loc);
 
-          text += ' Chọn ' + i + ' để tìm ATM ở ' + loc.formatted_address;
-          console.log(text);
+                  text += ' Chọn ' + i + ' để tìm ATM ở ' + loc.formatted_address;
+                  console.log(text);
 
-          buttons.push({
-            content_type: 'text',
-            title: i,
-            image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
-            payload: 'geoCode : ' + loc.geometry.location.lat + ' ' + loc.geometry.location.lng
-          });
-        }
-        console.log(buttons);
-        if (buttons.length > 0) {
+                  buttons.push({
+                    content_type: 'text',
+                    title: i,
+                    image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
+                    payload: 'geoCode : ' + loc.geometry.location.lat + ' ' + loc.geometry.location.lng
+                  });
+                }
+                console.log(buttons);
+                if (buttons.length > 0) {
 
-          try {
-            f.quick(sender, {
-              text,
-              buttons
+                  try {
+                    f.quick(sender, {
+                      text,
+                      buttons
+                    });
+
+                  } catch (e) {
+
+                    console.log(JSON.stringify(e));
+                  }
+
+                } else {
+                  f.txt(sender, 'Không tìm thấy địa điểm nào phù hợp với yêu cầu của anh/chị');
+                }
+
+                return locations;
+              });
+            }).on('error', function(e) {
+              console.log("getAtmLocation Got error: " + e.message);
+              return;
             });
-
-          } catch (e) {
-
-            console.log(JSON.stringify(e));
-          }
-
-        } else {
-          f.txt(sender, 'Không tìm thấy địa điểm nào phù hợp với yêu cầu của anh/chị');
-        }
-
-        return locations;
-      });
-    }).on('error', function(e) {
-      console.log("getAtmLocation Got error: " + e.message);
-      return;
-    });
 
             //end test
             console.log("end call find Geocode");
@@ -172,7 +176,7 @@ class Scenario {
           }
         }
       });
-      
+
     });
 
 
