@@ -5,6 +5,7 @@ function mongo() {
   var url = "mongodb://minhvtm201099:alexisozil99@ds117691.mlab.com:17691/bankbotdev";
 
   MongoClient.connect(url, function(err, db) {
+    var option = { useNewUrlParser: true };
     if (err) throw err;
     console.log("Database created!");
     db.close();
