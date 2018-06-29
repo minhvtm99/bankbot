@@ -83,9 +83,11 @@ var MongoClient = require('mongodb').MongoClient;
                        
   function findMessage() {
     return MongoClient.connect("mongodb://minhvtm99:alexisozil99@ds117691.mlab.com:17691/bankbotdev").then(function(db) {
-      var collection = db.collection('customers');
+      //var collection = db.collection('customers');
+      var dbo = db.db("bankbotdev");
+       return dbo.collection("customers").find({'request':'findATM'}).toArray();
       
-      return collection.find({'request':'findATM'}).toArray();
+      //return collection.find({'request':'findATM'}).toArray();
     }).then(function(items) {
       console.log(items);
       return items;
