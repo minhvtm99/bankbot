@@ -79,12 +79,25 @@ function logMessage(message) {
 
 
 // db1.js
+var MongoClient = require('mongodb').MongoClient;
+                       
+  function findMessage() {
+    return MongoClient.connect("mongodb://minhvtm99:alexisozil99@ds117691.mlab.com:17691/bankbotdev").then(function(db) {
+      var collection = db.collection('customers');
+      
+      return collection.find({'request':'findATM'}).toArray();
+    }).then(function(items) {
+      console.log(items);
+      return items;
+    });
+  }
+
 
 
 // app.js
-var db = require('./mongodb');
+//var db = require('./bankbotdev');
     
-db.findMessage().then(function(items) {
+findMessage().then(function(items) {
   console.info('The promise was fulfilled with items!', items);
 }, function(err) {
   console.error('The promise was rejected', err, err.stack);
