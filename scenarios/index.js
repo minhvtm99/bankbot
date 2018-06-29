@@ -95,16 +95,23 @@ function findMessage(query) {
 
 
 
-// app.js
-//var db = require('./bankbotdev');
+function sortMessage(property){
+  var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://minhvtm99:alexisozil99@ds117691.mlab.com:17691/bankbotdev";
 
-// findMessage().then(function(items) {
-//   console.info('The promise was fulfilled with items!', items);
-// }, function(err) {
-//   console.error('The promise was rejected', err, err.stack);
-// });
-
-
+MongoClient.connect(url, {
+    useNewUrlParser: true
+  }, function(err, db) {
+  if (err) throw err;
+  var dbo = db.db("bankbotdev");
+  var mysort = { property: 1 };
+  dbo.collection("customers").find().sort(mysort).toArray(function(err, result) {
+    if (err) throw err;
+    console.log(result);
+    db.close();
+  });
+});
+}
 
 
 // get property
@@ -199,10 +206,12 @@ class Scenario {
 
           var street_name = extractProperty(msg_tagged, 'Name');
           var atm = extractProperty(msg_tagged, 'ATM');
-          var criteria = {'sender': sender, 'request':'findATM'}
+          var criteria = {'sender': sender}
+          
+          sortMessage('time');
           
           findMessage(criteria).then(function(items) {
-            if (items.length > 0){
+            if (items.length > 0 && items[items.length -1].request == 'findATM'){
                 street_name = message.text;
                 atm = 'ATM';
             }
@@ -287,6 +296,7 @@ class Scenario {
               'sender': sender,
               'message': message.text,
               'message tagged': msg_tagged,
+              'time': msg_time,
               'request': 'findATM'
             });
             f.txt(sender, "Bạn muốn tìm ATM ở khu vực nào?");
