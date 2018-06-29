@@ -80,30 +80,29 @@ function logMessage(message) {
 
 // db1.js
 var MongoClient = require('mongodb').MongoClient;
-                       
-  function findMessage() {
-    return MongoClient.connect("mongodb://minhvtm99:alexisozil99@ds117691.mlab.com:17691/bankbotdev").then(function(db) {
-      //var collection = db.collection('customers');
-      var dbo = db.db("bankbotdev");
-       return dbo.collection("customers").find({'request':'findATM'}).toArray();
-      
-      //return collection.find({'request':'findATM'}).toArray();
-    }).then(function(items) {
-      console.log(items);
-      return items;
-    });
-  }
+
+function findMessage(query) {
+  return MongoClient.connect("mongodb://minhvtm99:alexisozil99@ds117691.mlab.com:17691/bankbotdev").then(function(db) {
+    //var collection = db.collection('customers');
+    var dbo = db.db("bankbotdev");
+    return dbo.collection("customers").find(query).toArray();
+
+    //return collection.find({'request':'findATM'}).toArray();
+  }).then(function(items) {
+    return items;
+  });
+}
 
 
 
 // app.js
 //var db = require('./bankbotdev');
-    
-findMessage().then(function(items) {
-  console.info('The promise was fulfilled with items!', items);
-}, function(err) {
-  console.error('The promise was rejected', err, err.stack);
-});
+
+// findMessage().then(function(items) {
+//   console.info('The promise was fulfilled with items!', items);
+// }, function(err) {
+//   console.error('The promise was rejected', err, err.stack);
+// });
 
 
 
@@ -164,11 +163,11 @@ class Scenario {
       let data = '';
       console.log(message.text);
       console.log(JSON.stringify(message));
-      
-//       var sender_info = f.getSenderName(sender);
 
-// 		console.log('getSenderName: ' + JSON.stringify(sender_info));
-//     console.log(sender_info);
+      //       var sender_info = f.getSenderName(sender);
+
+      // 		console.log('getSenderName: ' + JSON.stringify(sender_info));
+      //     console.log(sender_info);
 
       var request = require("request");
       let msg_content = message.text;
@@ -193,19 +192,26 @@ class Scenario {
         } else {
           let msg_tagged = body.categorized_msg;
           console.log(msg_tagged);
-          
+
           var street_name = extractProperty(msg_tagged, 'Name');
           var atm = extractProperty(msg_tagged, 'ATM');
+          var criteria = {'sender': sender, 'request':'findATM'}
           
-          var prev_request = findMessage({'request':'findATM'});
-          //var prev_request = prev_msg.request;
-          console.log(prev_request);
+          findMessage(criteria).then(function(items) {
+            if (items.length > 0){
+                street_name = message.text;
+                atm = 'ATM';
+              
+            }
+            
+            console.info('The promise was fulfilled with items!', items);
+          }, function(err) {
+            console.error('The promise was rejected', err, err.stack);
+          });
+
+
           
-          if (prev_request == 'findATM'){
-            street_name = message.text;
-            atm = 'ATM';
-          }
-          
+
           if (street_name !== '' && atm !== '') {
             //f.txt(sender, "AAAAAAA" );
             console.log("call find Geocode " + street_name);
@@ -276,17 +282,20 @@ class Scenario {
             console.log("end call find Geocode");
             return;
 
-          }
-          
-          else if(atm !== '' && street_name == ''){
-            
-            logMessage({'sender': sender, 'message': message.text, 'message tagged': msg_tagged, 'request':'findATM'});
+          } else if (atm !== '' && street_name == '') {
+
+            logMessage({
+              'sender': sender,
+              'message': message.text,
+              'message tagged': msg_tagged,
+              'request': 'findATM'
+            });
             f.txt(sender, "Bạn muốn tìm ATM ở khu vực nào?");
 
-            
+
           }
-          
-          
+
+
         }
       });
 
