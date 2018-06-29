@@ -156,13 +156,15 @@ class Scenario {
   }
 
 
-  processMessage(sender, message, f, wit) {
+  processMessage(sender, message, timeOfMessage, f, wit) {
     return new Promise((resolve, reject) => {
       let buttons = '';
       let text = '';
       let data = '';
       console.log(message.text);
-      console.log("INCOMING MESSAGE: " + JSON.stringify(message));
+      console.log(JSON.stringify(message));
+      
+      console.log("TIME: " + timeOfMessage);
 
       //       var sender_info = f.getSenderName(sender);
 
@@ -171,7 +173,6 @@ class Scenario {
 
       var request = require("request");
       let msg_content = message.text;
-      
       var options = {
         method: 'POST',
         url: 'https://bankbotapi.herokuapp.com/message_categorize',

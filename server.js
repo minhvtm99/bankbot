@@ -49,7 +49,7 @@ server.post('/', (req, res, next) => {
 		if (postback && postback.payload) {
 			scen.processPostback(sender, postback, f);
 		} else if (message && message.text && !message.quick_reply) {
-			scen.processMessage(sender, message, f, wit);
+			scen.processMessage(sender, message, timeOfMessage, f, wit);
 		} else if (message && message.quick_reply) {
 			scen.processQuickreply(sender, message, f);
 		} else if (message && message.attachments) {
