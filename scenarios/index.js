@@ -203,21 +203,7 @@ class Scenario {
                 atm = 'ATM';
             }
             
-           console.log("STREET 1: " + street_name);
-
-            
-            
-            
-            console.info('The promise was fulfilled with items!', items);
-          }, function(err) {
-            console.error('The promise was rejected', err, err.stack);
-          });
-        
-          console.log("STREET: " + street_name);
-
-          
-
-          if (street_name !== '' && atm !== '') {
+            if (street_name !== '' && atm !== '') {
             //f.txt(sender, "AAAAAAA" );
             console.log("call find Geocode " + street_name);
             //             this.findGeoLoc(sender, street_name, f);
@@ -299,6 +285,22 @@ class Scenario {
 
 
           }
+            
+           console.log("STREET 1: " + street_name);
+
+            
+            
+            
+            console.info('The promise was fulfilled with items!', items);
+          }, function(err) {
+            console.error('The promise was rejected', err, err.stack);
+          });
+        
+          console.log("STREET: " + street_name);
+
+          
+
+
 
 
         }
