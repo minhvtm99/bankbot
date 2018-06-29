@@ -1,21 +1,14 @@
-//   var MongoClient = require('mongodb').MongoClient;
-//   var url = "mongodb://minhvtm201099:alexisozil99@ds117691.mlab.com:17691/bankbotdev";
-
-//   MongoClient.connect(url, { useNewUrlParser: true }, function(err, db)  {
-//     if (err) throw err;
-//     console.log("Database created!");
-//     db.close();
-//   });
-
-// const mongo = require('mongodb').MongoClient
-// function doConnect() {
-//  	var url = 'mongodb://minhvtm201099:alexisozil99@ds117691.mlab.com:17691/bankbotdev';
-// 	mongo.connect(url, (err, db) => {
-// 		if(err) { 
-// 			throw err
-// 		} else {
-// 			console.log('Successfully connected to MongoDB')
-// 		}
-// 	})
-// }
-// doConnect()
+var MongoClient = require('mongodb').MongoClient;
+                       
+module.exports = {
+  findMessage: function() {
+    return MongoClient.connect("mongodb://minhvtm99:alexisozil99@ds117691.mlab.com:17691/bankbotdev").then(function(db) {
+      var collection = db.collection('customers');
+      
+      return collection.find({'request':'findATM'}).toArray();
+    }).then(function(items) {
+      console.log(items);
+      return items;
+    });
+  }
+};

@@ -60,49 +60,38 @@ function logMessage(message) {
 
 }
 
-function findMessage(criteria){
-  var MongoClient = require('mongodb').MongoClient;
-  var url = "mongodb://minhvtm99:alexisozil99@ds117691.mlab.com:17691/bankbotdev";
+// function findMessage(criteria){
+//   var MongoClient = require('mongodb').MongoClient;
+//   var url = "mongodb://minhvtm99:alexisozil99@ds117691.mlab.com:17691/bankbotdev";
 
-MongoClient.connect(url, function(err, db) {
-  if (err) throw err;
-  var dbo = db.db("bankbotdev");
-  var query = criteria;
-  dbo.collection("customers").find(query).toArray(function(err, result) {
-    if (err) throw err;
-    console.log(result);
-    db.close();
+// MongoClient.connect(url, function(err, db) {
+//   if (err) throw err;
+//   var dbo = db.db("bankbotdev");
+//   var query = criteria;
+//   dbo.collection("customers").find(query).toArray(function(err, result) {
+//     if (err) throw err;
+//     console.log(result);
+//     db.close();
 
-  });
-});
-}
+//   });
+// });
+// }
 
 
 // db1.js
-var MongoClient = require('mongodb').MongoClient;
-                       
-module.exports = {
-  findMessage: function() {
-    return MongoClient.connect("mongodb://minhvtm99:alexisozil99@ds117691.mlab.com:17691/bankbotdev").then(function(db) {
-      var collection = db.collection('customers');
-      
-      return collection.find({'request':'findATM'}).toArray();
-    }).then(function(items) {
-      console.log(items);
-      return items;
-    });
-  }
-};
 
 
 // app.js
-var db = require('./bankbotdev');
+var db = require('./mongodb');
     
 db.findMessage().then(function(items) {
   console.info('The promise was fulfilled with items!', items);
 }, function(err) {
   console.error('The promise was rejected', err, err.stack);
 });
+
+
+
 
 // get property
 function extractProperty(msg_tagged, property) {
