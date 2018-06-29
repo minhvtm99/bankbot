@@ -152,7 +152,9 @@ class FBeamer {
 					let messageObj = {
 						sender: msgEvent.sender.id,
             
-						timeOfMessage: msgEvent.timestamp,
+						timeOfMessage: msgEvent.
+            
+            stamp,
 						message: msgEvent.message || undefined,
 						postback: msgEvent.postback || undefined
 					}

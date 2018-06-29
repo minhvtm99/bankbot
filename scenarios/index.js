@@ -162,7 +162,7 @@ class Scenario {
       let text = '';
       let data = '';
       console.log(message.text);
-      console.log(JSON.stringify(message));
+      console.log("INCOMING MESSAGE: " + JSON.stringify(message));
 
       //       var sender_info = f.getSenderName(sender);
 
@@ -171,6 +171,7 @@ class Scenario {
 
       var request = require("request");
       let msg_content = message.text;
+      
       var options = {
         method: 'POST',
         url: 'https://bankbotapi.herokuapp.com/message_categorize',
@@ -294,8 +295,6 @@ class Scenario {
             console.error('The promise was rejected', err, err.stack);
           });
         
-          console.log("STREET: " + street_name);
-
         }
       });
 

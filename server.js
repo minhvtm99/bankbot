@@ -39,7 +39,8 @@ server.post('/', (req, res, next) => {
 		let {
 			sender,
 			postback,
-			message
+			message,
+      timeOfMessage
 		} = msg;
 		
 		console.log('----> incomming msg : ' + JSON.stringify(msg));
