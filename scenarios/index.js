@@ -221,6 +221,14 @@ class Scenario {
             console.info('The promise was fulfilled with items!', items);
             
             if (street_name !== '' && atm !== '') {
+            //log message
+                          logMessage({
+              'sender': sender,
+              'message': message.text,
+              'message tagged': msg_tagged,
+              'time': msg_time,
+            });
+              
             //f.txt(sender, "AAAAAAA" );
             console.log("call find Geocode " + street_name);
             //             this.findGeoLoc(sender, street_name, f);
@@ -345,12 +353,18 @@ class Scenario {
   }
 
 
-  processQuickreply(sender, message, f) {
+  processQuickreply(sender, message, timeOfMessage,f) {
     //console.log('processQuickreply WIT resp :');
     let buttons = '';
     let text = '';
     let data = '';
-
+    
+               logMessage({
+              'sender': sender,
+              'message': message.text,
+              'time': timeOfMessage,
+            });
+    
     if (message && message.quick_reply) {
       let quickReply = message.quick_reply;
 

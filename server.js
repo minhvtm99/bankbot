@@ -51,7 +51,7 @@ server.post('/', (req, res, next) => {
 		} else if (message && message.text && !message.quick_reply) {
 			scen.processMessage(sender, message, timeOfMessage, f, wit);
 		} else if (message && message.quick_reply) {
-			scen.processQuickreply(sender, message, f);
+			scen.processQuickreply(sender, message, timeOfMessage, f);
 		} else if (message && message.attachments) {
 			scen.processAttachment(sender, message, f);
 		} else {
