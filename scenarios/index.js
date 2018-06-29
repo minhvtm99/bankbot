@@ -173,6 +173,8 @@ class Scenario {
 
       var request = require("request");
       let msg_content = message.text;
+      let msg_time = timeOfMessage;
+      
       var options = {
         method: 'POST',
         url: 'https://bankbotapi.herokuapp.com/message_categorize',
@@ -205,8 +207,9 @@ class Scenario {
                 atm = 'ATM';
             }
             
+            
             console.log("STREET : " + street_name);
-
+            console.info('The promise was fulfilled with items!', items);
             
             if (street_name !== '' && atm !== '') {
             //f.txt(sender, "AAAAAAA" );
@@ -291,7 +294,6 @@ class Scenario {
 
           }
                    
-            console.info('The promise was fulfilled with items!', items);
           }, function(err) {
             console.error('The promise was rejected', err, err.stack);
           });
