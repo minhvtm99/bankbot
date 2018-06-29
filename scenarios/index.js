@@ -208,7 +208,8 @@ class Scenario {
           }, function(err) {
             console.error('The promise was rejected', err, err.stack);
           });
-
+        
+          console.log("STREET: " + street_name);
 
           
 
