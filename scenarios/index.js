@@ -201,9 +201,12 @@ class Scenario {
             if (items.length > 0){
                 street_name = message.text;
                 atm = 'ATM';
-                        console.log("STREET 1: " + street_name);
-
             }
+            
+           console.log("STREET 1: " + street_name);
+
+            
+            
             
             console.info('The promise was fulfilled with items!', items);
           }, function(err) {
